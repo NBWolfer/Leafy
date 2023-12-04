@@ -1,0 +1,6 @@
+@Leafy.Server_HostAddress = http://localhost:5082
+
+GET {{Leafy.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

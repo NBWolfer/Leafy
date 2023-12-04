@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leafy.Server", "Leafy.Server\Leafy.Server.csproj", "{891222BE-A4AA-44AA-9244-9E4CB946343E}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "leafy.client", "leafy.client\leafy.client.esproj", "{C665ECE0-4AD6-4C62-8AA6-EF590263E336}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{891222BE-A4AA-44AA-9244-9E4CB946343E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{891222BE-A4AA-44AA-9244-9E4CB946343E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{891222BE-A4AA-44AA-9244-9E4CB946343E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{891222BE-A4AA-44AA-9244-9E4CB946343E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C665ECE0-4AD6-4C62-8AA6-EF590263E336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C665ECE0-4AD6-4C62-8AA6-EF590263E336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C665ECE0-4AD6-4C62-8AA6-EF590263E336}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C665ECE0-4AD6-4C62-8AA6-EF590263E336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C665ECE0-4AD6-4C62-8AA6-EF590263E336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C665ECE0-4AD6-4C62-8AA6-EF590263E336}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54A227EC-EAA6-43F5-BDB0-505EF6C9933E}
+	EndGlobalSection
+EndGlobal

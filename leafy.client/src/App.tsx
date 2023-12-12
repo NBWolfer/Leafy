@@ -1,38 +1,40 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-interface Forecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+interface Plant {
+    id: number;
+    name: string;
+    latinName: string;
+    description: string;
+    imageUrl: string;
+    diseaseId: number;
 }
 
 function App() {
-    const [forecasts, setForecasts] = useState<Forecast[]>();
+    const [plant, setPlant] = useState<Plant[]>();
 
     useEffect(() => {
-        populateWeatherData();
+        populatePlantData();
     }, []);
 
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table table-striped" aria-labelledby="tabelLabel">
+    const contents = plant === undefined
+        ? <p><em>Loading...</em></p>
+        : <table className='table table-striped' aria-labelledby="tabelLabel">
             <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
+                <tr>Name</tr>
+                <tr>Latin Name</tr>
+                <tr>Description</tr>
+                <tr>Image Url</tr>
+                <tr>Disease Id</tr>
             </thead>
             <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
+                {plant.map(plant =>
+                    <tr key={plant.name}>
+                        <td>{plant.name}</td>
+                        <td>{plant.latinName}</td>
+                        <td>{plant.description}</td>
+                        <td>{plant.imageUrl}</td>
+                        <td>{plant.diseaseId}</td>
                     </tr>
                 )}
             </tbody>
@@ -40,16 +42,16 @@ function App() {
 
     return (
         <div>
-            <h1 id="tabelLabel">Weather forecast</h1>
+            <h1 id="tabelLabel">Plants</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
         </div>
     );
 
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
+    async function populatePlantData() {
+        const response = await fetch('Plants');
         const data = await response.json();
-        setForecasts(data);
+        setPlant(data);
     }
 }
 

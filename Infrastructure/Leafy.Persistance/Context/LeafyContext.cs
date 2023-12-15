@@ -7,7 +7,7 @@ namespace Leafy.Persistance.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=MAHMUT-ENES\MSSQL22_S1;initial Catalog=Leafy;integrated Security=true;TrustServerCertificate= true");
+            optionsBuilder.UseSqlServer(@"Server=LAPTOP-98J14D0V;initial Catalog=Leafy;integrated Security=true;TrustServerCertificate= true");
         }
 
         public DbSet<Plant> Plants { get; set; }

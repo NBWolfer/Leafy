@@ -1,58 +1,45 @@
-import { useEffect, useState } from 'react';
 import './App.css';
+import { useState, useEffect } from 'react';
 
 interface Plant {
-    id: number;
-    name: string;
-    latinName: string;
-    description: string;
-    imageUrl: string;
-    diseaseId: number;
+    id: number,
+    name: string,
+    latinName: string,
+    description: string,
+    imageURL: string,
+    diseaseId: number,
 }
 
 function App() {
-    const [plant, setPlant] = useState<Plant[]>();
+    const [plants, setPlants] = useState<Plant[]>([]);
 
     useEffect(() => {
-        populatePlantData();
+        const fetchPlants = async () => {
+            const response = await fetch(`api/Plants`);
+            console.log(response)
+            const plants = await response.json();
+            setPlants(plants);
+        }
+        fetchPlants();
     }, []);
 
-    const contents = plant === undefined
-        ? <p><em>Loading...</em></p>
-        : <table className='table table-striped' aria-labelledby="tabelLabel">
-            <thead>
-                <tr>Name</tr>
-                <tr>Latin Name</tr>
-                <tr>Description</tr>
-                <tr>Image Url</tr>
-                <tr>Disease Id</tr>
-            </thead>
-            <tbody>
-                {plant.map(plant =>
-                    <tr key={plant.name}>
-                        <td>{plant.name}</td>
-                        <td>{plant.latinName}</td>
-                        <td>{plant.description}</td>
-                        <td>{plant.imageUrl}</td>
-                        <td>{plant.diseaseId}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>;
-
-    return (
-        <div>
-            <h1 id="tabelLabel">Plants</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
-        </div>
-    );
-
-    async function populatePlantData() {
-        const response = await fetch('Plants');
-        const data = await response.json();
-        setPlant(data);
-    }
+    const content = plants === undefined ?
+        <p><em>Loading...</em></p> :
+        <ul>
+            {plants.map(plant =>
+                <li key={plant.id}>
+                    <h3>{plant.name}</h3>
+                    <p>{plant.description}</p>
+                    <p>{plant.latinName}</p>
+                    <p>{plant.imageURL}</p>
+                    <p>{plant.diseaseId}</p>
+                </li>
+            )}
+            </ul>;
+    return <div>
+        <h1>Plants</h1>
+        {content}
+    </div>
 }
 
 export default App;

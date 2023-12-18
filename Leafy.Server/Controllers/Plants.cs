@@ -2,6 +2,7 @@
 using Leafy.Application.Features.Queries.PlantQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace Leafy.Server.Controllers
 {
@@ -19,15 +20,17 @@ namespace Leafy.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> PlantList()
         {
-            var result = await _mediator.Send(new GetPlantQuery());
-            return Ok(result);
+            var results = await _mediator.Send(new GetPlantQuery());
+            
+            return Ok(results);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> PlantById(int id)
         {
             var result = await _mediator.Send(new GetPlantByIdQuery(id));
-            return Ok(result);
+            string resultjson = "{data:{Id:"+result.Id+",Name:"+result.Name+",LatinName:"+result.LatinName+",DiseaseId:"+result.DiseaseId+",Description:"+result.Description+"}}";
+            return Ok(resultjson);
         }
 
         [HttpPost]

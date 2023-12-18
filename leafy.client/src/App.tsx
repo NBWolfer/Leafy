@@ -10,6 +10,7 @@ interface Plant {
     diseaseId: number,
 }
 
+// fasdfasd
 function App() {
     const [plants, setPlants] = useState<Plant[]>([]);
 

@@ -2,7 +2,6 @@
 using Leafy.Application.Features.Queries.PlantQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
 
 namespace Leafy.Server.Controllers
 {
@@ -29,8 +28,7 @@ namespace Leafy.Server.Controllers
         public async Task<IActionResult> PlantById(int id)
         {
             var result = await _mediator.Send(new GetPlantByIdQuery(id));
-            string resultjson = "{data:{Id:"+result.Id+",Name:"+result.Name+",LatinName:"+result.LatinName+",DiseaseId:"+result.DiseaseId+",Description:"+result.Description+"}}";
-            return Ok(resultjson);
+            return Ok(result);
         }
 
         [HttpPost]

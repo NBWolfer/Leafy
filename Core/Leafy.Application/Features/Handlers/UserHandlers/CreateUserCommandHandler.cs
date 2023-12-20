@@ -18,13 +18,17 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
 
         public async Task Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            string hashedPassword = _repository.HashPassword(request.Password, IUserRepository.SecretKey, IUserRepository.Pepper, IUserRepository.Iteration);
-
+            string salt = _repository.GenerateSalt();
+            string hashedPassword = _repository.HashPassword(request.Password, salt, IUserRepository.Pepper, IUserRepository.Iteration);
+            string role = "user";
             await _repository.CreateAsync(new User
             {
                 Name = request.Name,
                 Email = request.Email,
-                Password = hashedPassword
+                Password = hashedPassword,
+                Salt = salt,
+                Role = role,
+                RegisteredDate = DateTime.Now
             });
         }
     }

@@ -50,14 +50,25 @@ namespace Leafy.Persistance.Repositories
 
         public string HashPassword(string password, string salt, string pepper, int iteration)
         {
-            if(iteration <= 0 ) return password;
-            using var sha256 = SHA256.Create();
+            if (iteration <= 0) return password;
             var passwordWithSalt = password + salt + pepper;
-            var bytehash = sha256.ComputeHash(Encoding.UTF8.GetBytes(passwordWithSalt));
+            var bytehash = SHA256.HashData(Encoding.UTF8.GetBytes(passwordWithSalt));
             var hash = Convert.ToBase64String(bytehash);
             return HashPassword(hash, salt, pepper, iteration - 1);
         }
 
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+           var user = await _context.Set<User>().Where(x => x.Email == email).FirstOrDefaultAsync();
+           return user;
+        }
 
+        public string GenerateSalt()
+        {
+            using var rng = RandomNumberGenerator.Create();
+            byte[] salt = new byte[32];
+            rng.GetBytes(salt);
+            return Convert.ToBase64String(salt);
+        }
     }
 }

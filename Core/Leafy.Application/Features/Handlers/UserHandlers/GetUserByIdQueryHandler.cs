@@ -28,7 +28,10 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
-                Password = user.Password
+                Password = user.Password,
+                Token = user.Token,
+                Role = user.Role,
+                RegisteredDate = user.RegisteredDate
             };
         }
     }

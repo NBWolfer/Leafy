@@ -1,7 +1,6 @@
 ﻿using Leafy.Application.Features.Commands.UserCommands;
 using Leafy.Application.Features.Queries.UserQueries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Leafy.Server.Controllers

@@ -9,22 +9,26 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
     {
-        private readonly IRepository<User> _repository;
+        private readonly IUserRepository _repository;
 
-        public CreateUserCommandHandler(IRepository<User> repository)
+        public CreateUserCommandHandler(IUserRepository repository)
         {
             _repository = repository;
         }
 
         public async Task Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-
-
+            string salt = _repository.GenerateSalt();
+            string hashedPassword = _repository.HashPassword(request.Password, salt, IUserRepository.Pepper, IUserRepository.Iteration);
+            string role = "user";
             await _repository.CreateAsync(new User
             {
                 Name = request.Name,
                 Email = request.Email,
-                Password = request.Password
+                Password = hashedPassword,
+                Salt = salt,
+                Role = role,
+                RegisteredDate = DateTime.Now
             });
         }
     }

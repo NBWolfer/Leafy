@@ -11,7 +11,7 @@ namespace Leafy.Application.Services
 {
     public class TokenService
     {
-        public async Task<User> CreateToken(User user)
+        public static User CreateToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes("this is my custom Secret key for authnetication");
@@ -26,13 +26,35 @@ namespace Leafy.Application.Services
                     new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, user.Role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };  
             
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
 
             return user;
+        }
+
+        public static bool CheckToken(User user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes("this is my custom Secret key for authnetication");
+            tokenHandler.ValidateToken(user.Token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateLifetime = true,
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ClockSkew = TimeSpan.Zero
+            }, out SecurityToken validatedToken);
+
+            if(validatedToken == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

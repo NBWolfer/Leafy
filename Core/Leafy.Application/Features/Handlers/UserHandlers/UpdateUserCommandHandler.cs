@@ -12,9 +12,9 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
 {
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
     {
-        private readonly IRepository<User> _repository;
+        private readonly IUserRepository _repository;
 
-        public UpdateUserCommandHandler(IRepository<User> repository)
+        public UpdateUserCommandHandler(IUserRepository repository)
         {
             _repository = repository;
         }
@@ -24,7 +24,8 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
             var user = await _repository.GetByIdAsync(request.Id);
             user.Name = request.Name;
             user.Email = request.Email;
-            user.Password = request.Password;
+            var hashedpassword = _repository.HashPassword(request.Password, user.Salt, IUserRepository.Pepper, IUserRepository.Iteration);
+            user.Password = hashedpassword;
             await _repository.UpdateAsync(user);
         }
     }

@@ -59,7 +59,9 @@ namespace Leafy.Persistance.Repositories
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
-           var user = await _context.Set<User>().Where(x => x.Email == email).FirstOrDefaultAsync();
+           var user = await _context.Set<User>()
+                .Where(x => x.Email == email)
+                .FirstOrDefaultAsync();
            return user;
         }
 

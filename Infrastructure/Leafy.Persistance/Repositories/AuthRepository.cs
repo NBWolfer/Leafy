@@ -25,5 +25,11 @@ namespace Leafy.Persistance.Repositories
            if(hashedPassword != user.Password) return 1;
            return 0;
         }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            User user = await _repository.GetUserByEmailAsync(email);
+            return user;
+        }
     }
 }

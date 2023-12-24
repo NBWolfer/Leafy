@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Leafy.Application.Services
@@ -10,7 +12,6 @@ namespace Leafy.Application.Services
         public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceRegistration).Assembly));
-
-        }
+        }  
     }
 }

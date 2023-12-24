@@ -1,6 +1,7 @@
 ﻿using Leafy.Application.Features.Commands.DiseaseCommands;
 using Leafy.Application.Features.Commands.UserCommands;
 using Leafy.Application.Interfaces;
+using Leafy.Application.Services;
 using Leafy.Domain.Entities;
 using MediatR;
 using System.Security.Cryptography;
@@ -20,16 +21,17 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
         {
             string salt = _repository.GenerateSalt();
             string hashedPassword = _repository.HashPassword(request.Password, salt, IUserRepository.Pepper, IUserRepository.Iteration);
-            string role = "user";
-            await _repository.CreateAsync(new User
+            User user = new User
             {
                 Name = request.Name,
                 Email = request.Email,
                 Password = hashedPassword,
                 Salt = salt,
-                Role = role,
-                RegisteredDate = DateTime.Now
-            });
+                Role = request.Role,
+                RegisteredDate = DateTime.Now,
+            };
+            user = TokenService.CreateToken(user);
+            await _repository.CreateAsync(user);
         }
     }
 }

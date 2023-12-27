@@ -9,60 +9,36 @@ interface Plant {
     diseaseId: number,
 }
 
-interface PlantState {
-    plants: Plant[] | null,
-    loading: boolean,
-    error: string | null
-}
-
-const usePlants = (): PlantState => {
-    const [state, setState] = useState<PlantState>({
-        plants: null,
-        loading: true,
-        error: null
-    });
+function PlantList() {
+    const [plants, setPlants] = useState<Plant[]>([]);
 
     useEffect(() => {
         const fetchPlants = async () => {
-            try {
-                const response = await fetch(`api/Plants`);
-                const plants = await response.json();
-                setState({ plants, loading: false, error: null });
-            }
-            catch (error) {
-                setState({ plants: null, loading: false, error: error.message })
-            }
+            const response = await fetch(`api/Plans`);
+            console.log(response)
+            const plants = await response.json();
+            setPlants(plants);
         }
         fetchPlants();
     }, []);
 
-    return state;
-};
-
-export default function PlantList() {
-    const { plants, loading, error } = usePlants();
-
-    if (loading) {
-        return <div>Loading...</div>
-    }
-
-    if (error) {
-        return <div>{error}</div>
-    }
-
-    return (
+    const content = plants === undefined ?
+        <p>Loading...</p> :
         <ul>
-            <li>
-                {plants?.map((plant) => (
-                    <div key={plant.id}>
-                        <p>{plant.name} </p>
-                        <p>{plant.latinName}</p>
-                        <p>{plant.description}</p>
-                        <p>{plant.diseaseId}</p>
-                        <p>{plant.imageURL}</p>
-                    </div>
-                ))}
-            </li>
-        </ul>
-    )
+            {plants.map(plant =>
+                <li key={plant.id}>
+                    <h3>{plant.name}</h3>
+                    <p>{plant.description}</p>
+                    <p>{plant.latinName}</p>
+                    <p>{plant.imageURL}</p>
+                    <p>{plant.diseaseId}</p>
+                </li>
+            )}
+            </ul>;
+    return <div>
+        <h1>Plants</h1>
+        {content}
+    </div>
 }
+
+export default PlantList;

@@ -31,5 +31,6 @@ namespace Leafy.Persistance.Repositories
             User user = await _repository.GetUserByEmailAsync(email);
             return user;
         }
+
     }
 }

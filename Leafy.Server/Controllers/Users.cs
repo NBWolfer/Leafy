@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Leafy.Server.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class Users : ControllerBase
@@ -22,7 +23,7 @@ namespace Leafy.Server.Controllers
         public async Task<IActionResult> UserList()
         {
             var users = await _mediator.Send(new GetUserQuery());
-            if (users == null)
+            if (users is null)
                 return NotFound("Kullanıcılar getirilemedi!");
             return Ok(users);
         }
@@ -32,6 +33,8 @@ namespace Leafy.Server.Controllers
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _mediator.Send(new GetUserByIdQuery(id));
+            if(user is null)
+                return NotFound("Kullanıcı bulunamadı!");
             return Ok(user);
         }
 

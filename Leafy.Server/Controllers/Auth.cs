@@ -29,7 +29,7 @@ namespace Leafy.Server.Controllers
                 int stat =  await _repository.LoginUser(email, password);
                 User user = await _repository.GetUserByEmail(email);
                 
-                if (stat == -1) return BadRequest("User not found!");
+                if (stat == -1) return BadRequest("Wrong email or password!");
                 if (stat == 1) return BadRequest("Wrong password!");
                 
                 var claims = new List<Claim>
@@ -48,6 +48,12 @@ namespace Leafy.Server.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            return SignOut("Cookie-0");
         }
     }
 }

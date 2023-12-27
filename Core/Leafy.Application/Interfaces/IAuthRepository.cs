@@ -10,5 +10,6 @@ namespace Leafy.Application.Interfaces
     public interface IAuthRepository
     {
         Task<int> LoginUser(string email, string password);
+        Task<User> GetUserByEmail(string email);
     }
 }

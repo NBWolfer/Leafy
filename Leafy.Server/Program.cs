@@ -2,8 +2,7 @@ using Leafy.Application.Interfaces;
 using Leafy.Application.Services;
 using Leafy.Persistance.Context;
 using Leafy.Persistance.Repositories;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,16 +10,28 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<LeafyContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 builder.Services.AddApplicationServices(builder.Configuration);
 
 
 builder.Services.AddControllers();
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
-//        options => builder.Configuration.Bind("JwtSettings", options))
-//    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-//        options => builder.Configuration.Bind("CookieSettings", options));
+
+builder.Services.AddAuthentication("Cookie-0")
+    .AddCookie("Cookie-0", options =>
+    {
+        options.Cookie.Name = "Cookie-0";
+        options.AccessDeniedPath = "/login";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("adminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+    options.AddPolicy("user", policy => policy.RequireClaim(ClaimTypes.Role, "user"));
+    options.AddPolicy("admin-user", policy => policy.RequireRole("user","admin"));
+});
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -40,6 +51,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

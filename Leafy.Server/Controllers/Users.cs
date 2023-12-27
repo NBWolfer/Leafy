@@ -1,10 +1,12 @@
 ﻿using Leafy.Application.Features.Commands.UserCommands;
 using Leafy.Application.Features.Queries.UserQueries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Leafy.Server.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class Users : ControllerBase
@@ -16,20 +18,27 @@ namespace Leafy.Server.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "adminOnly")]
         [HttpGet]
         public async Task<IActionResult> UserList()
         {
             var users = await _mediator.Send(new GetUserQuery());
+            if (users is null)
+                return NotFound("Kullanıcılar getirilemedi!");
             return Ok(users);
         }
 
+        [Authorize(Policy = "admin-user")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _mediator.Send(new GetUserByIdQuery(id));
+            if(user is null)
+                return NotFound("Kullanıcı bulunamadı!");
             return Ok(user);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserCommand command)
         {
@@ -37,6 +46,7 @@ namespace Leafy.Server.Controllers
             return Ok("User created!");
         }
 
+        [Authorize(Policy = "admin-user")]
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UpdateUserCommand command)
         {
@@ -44,6 +54,7 @@ namespace Leafy.Server.Controllers
             return Ok("User updated!");
         }
 
+        [Authorize(Policy = "admin-user")]
         [HttpDelete]
         public async Task<IActionResult> RemoveUser(int id)
         {

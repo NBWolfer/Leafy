@@ -1,7 +1,13 @@
 {
   "dependencies": {
+    "mdb-react-ui-kit": "^7.0.0",
     "react-bootstrap": "^2.9.2",
     "react-offcanvas": "^0.4.0",
-    "react-router-dom": "^6.21.0"
+    "react-redux": "^9.0.4",
+    "react-router-dom": "^6.21.0",
+    "redux": "^5.0.1"
+  },
+  "devDependencies": {
+    "sass": "^1.69.5"
   }
 }

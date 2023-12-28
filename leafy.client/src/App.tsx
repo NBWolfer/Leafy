@@ -3,8 +3,9 @@ import './assets/bootstrap.min.css';
 import './assets/styles.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home';
-import Login from './Pages/Login';
 import Nav from './Components/Navbar';
+import Login from './Pages/Login';
+import Footer from './Components/Footer';
 
 
 
@@ -16,8 +17,9 @@ function App() {
             <Nav />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={< Login/>} />
             </Routes>
+            <Footer />
         </Router>
         </div>
 }

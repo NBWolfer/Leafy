@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import menuicon from "../Images/menu50.png";
 import { OffcanvasBody } from "react-bootstrap";
+import fontadi from "../assets/fonts/LibreBaskerville-Bold.ttf";
 
 function Navbar() {
   //show hide offcanvas
@@ -23,7 +24,7 @@ function Navbar() {
           <div style={{  marginLeft: "0px", marginRight: "px" }}>
             <a href="\"><img src={logo} style={{width: "64", height: "64", background: "transparent"}}/></a>   
           </div>
-          <span style={{ color: "white", fontSize: "32px" }}>Leafy</span>
+          <span style={{ color: "white", fontSize: "42px", fontFamily: 'fontadi' }}>Leafy</span>
           <Button
             onClick={handleShow}
             style={{ background: "transparent", border: "none" }}

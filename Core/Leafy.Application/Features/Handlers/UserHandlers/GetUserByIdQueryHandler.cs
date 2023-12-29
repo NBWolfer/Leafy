@@ -23,16 +23,23 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
         public async Task<GetUserByIdQueryResult> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var user = await _repository.GetByIdAsync(request.Id);
-            return new GetUserByIdQueryResult
+            if (user is not null)
             {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email,
-                Password = user.Password,
-                Token = user.Token,
-                Role = user.Role,
-                RegisteredDate = user.RegisteredDate
-            };
+                return new GetUserByIdQueryResult
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Password = user.Password,
+                    Token = user.Token,
+                    Role = user.Role,
+                    RegisteredDate = user.RegisteredDate
+                };
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

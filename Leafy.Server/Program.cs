@@ -21,8 +21,12 @@ builder.Services.AddAuthentication("Cookie-0")
     .AddCookie("Cookie-0", options =>
     {
         options.Cookie.Name = "Cookie-0";
-        options.AccessDeniedPath = "/login";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+        options.Events.OnRedirectToAccessDenied = context =>
+        {
+            context.Response.StatusCode = 403;
+            return Task.CompletedTask;
+        };
     });
 
 builder.Services.AddAuthorization(options =>
@@ -50,6 +54,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,4 +1,6 @@
-﻿using Leafy.Application.Features.Commands.UserCommands;
+﻿using Leafy.Application.DTOs;
+using Leafy.Application.Features.Commands.UserCommands;
+using Leafy.Application.Features.Queries.UserQueries;
 using Leafy.Application.Interfaces;
 using Leafy.Domain.Entities;
 using MediatR;
@@ -6,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace Leafy.Server.Controllers
 {
@@ -15,13 +18,15 @@ namespace Leafy.Server.Controllers
     public class Auth : ControllerBase
     {
         private readonly IAuthRepository _repository;
+        private readonly IMediator _mediator;
 
-        public Auth(IAuthRepository authRepository)
+        public Auth(IAuthRepository authRepository, IMediator mediator)
         {
             _repository = authRepository;
+            _mediator = mediator;
         }
 
-        [HttpPost("login")]
+        [HttpPost("loginCookie")]
         public async Task<IActionResult> Login(string email, string password)
         {
             try
@@ -46,7 +51,28 @@ namespace Leafy.Server.Controllers
             } 
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(JsonSerializer.Serialize(new {
+                    Title = "Hata",
+                    ex.Message,
+                }));
+            }
+        }
+
+        [HttpPost("loginJWT")]
+        public async Task<IActionResult> LoginJWT([FromBody] LoginModel login)
+        {
+            try { 
+            var response = await _mediator.Send(new LoginUserQuery(login.Email, login.Password));
+
+            return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(JsonSerializer.Serialize(new
+                {
+                    Title = "Hata!",
+                    ex.Message,
+                }));
             }
         }
 

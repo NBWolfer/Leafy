@@ -5,11 +5,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace Leafy.Server.Controllers
 {
     [Authorize]
-    [ServiceFilter(typeof(ExceptionFilter))]
     [Route("api/[controller]")]
     [ApiController]
     public class Users : ControllerBase
@@ -26,19 +26,31 @@ namespace Leafy.Server.Controllers
         public async Task<IActionResult> UserList()
         {
             try {
-                Claim claim = new Claim(ClaimTypes.Role, "admin");
+                Claim claim = new Claim(ClaimTypes.Role, "user");
                 if(User.Claims.Contains(claim))
                 {
                     return Unauthorized("User is not authorized!");
                 }
                 var users = await _mediator.Send(new GetUserQuery());
                 if (users is null)
-                    return NotFound("Kullanıcılar getirilemedi!");
-                return Ok(users);
+                    return NotFound(JsonSerializer.Serialize(new
+                    {
+                        Title = "Hata!",
+                        Message = "Kullanıcılar getirilemedi!"
+                    }));
+                return Ok(JsonSerializer.Serialize(new
+                {
+                    Title = "GetAllUsers",
+                    Data = users
+                }));
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(JsonSerializer.Serialize(new
+                {
+                    Title = "Hata!",
+                    Message = ex.ToString()
+                }));
             }
     }
 

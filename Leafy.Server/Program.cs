@@ -2,6 +2,7 @@ using Leafy.Application.Interfaces;
 using Leafy.Application.Services;
 using Leafy.Persistance.Context;
 using Leafy.Persistance.Repositories;
+using Leafy.Server.Extensions;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,7 +55,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.ConfigureExceptionHandler<Program>(app.Services.GetRequiredService<ILogger<Program>>());
 
 app.UseAuthentication();
 app.UseAuthorization();

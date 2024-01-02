@@ -21,7 +21,16 @@ builder.Services.AddApplicationServices(builder.Configuration);
 
 builder.Services.AddControllers();
 
-builder.Services.AddAuthentication("Cookie-0")
+builder.Services.AddAuthentication("token").AddCookie("token", options =>
+{
+    options.Cookie.Name = "token";
+    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    options.Events.OnRedirectToAccessDenied = context =>
+    {
+        context.Response.StatusCode = 403;
+        return Task.CompletedTask;
+    };
+})
     .AddCookie("Cookie-0", options =>
     {
         options.Cookie.Name = "Cookie-0";

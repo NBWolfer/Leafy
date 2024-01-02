@@ -17,8 +17,8 @@ window.sessionStorage.setItem('a', a.toString());
 console.log(window.sessionStorage.getItem('a'));
 
 function Login() {
-  const email = 'email';
-  const password = '123';
+  var email = '';
+  var password = '';
   const login = async () => {
     await axios.post(`api/Auth/loginJWT`,  {
       email,
@@ -31,7 +31,17 @@ function Login() {
       console.log(error);
     });
     console.log(window.sessionStorage.getItem('token'));
-  }
+    }
+
+    const getEmail = () => {
+        email = (document.getElementById('email') as HTMLInputElement).value;
+        console.log(email);
+    }
+
+    const getPassword = () => {
+        password = (document.getElementById('password') as HTMLInputElement).value;
+        console.log(password);
+    }
 
   return (
     <MDBContainer fluid>
@@ -44,9 +54,9 @@ function Login() {
 
               <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
               <p className="text-white-50 mb-5">Please enter your login and password!</p>
-              <div id='formControlLg' style={{paddingRight:100}}>
-              <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='email'  type='email' size="lg"/>
-              <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='password' type='password' size="lg"/>
+                          <div id='formControlLg' style={{ paddingRight: 100 }}>
+                              <MDBInput id='email' onChange={getEmail} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='email' type='email' size="lg" />
+                              <MDBInput id='password' onChange={getPassword} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='password' type='password' size="lg" />
               </div>
               <p className="small mb-3 pb-lg-2"><a className="text-white-50" href="#!">Forgot password?</a></p>
               <MDBBtn id='loginbtn' onClick={login} outline className='mx-2 px-5' color='white' size='lg' style={{marginBottom:70}} >

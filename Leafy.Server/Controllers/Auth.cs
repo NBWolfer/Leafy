@@ -62,8 +62,18 @@ namespace Leafy.Server.Controllers
             try { 
                 var response = await _mediator.Send(new LoginUserQuery(login.Email, login.Password));
                 
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, response.UserName),
+                    new Claim(ClaimTypes.Email, response.Email),
+                    new Claim(ClaimTypes.Role, response.Role),
+                    new Claim("token", response.JWT)
+                };
 
-                return Ok(JsonSerializer.Serialize(response));
+                var identity = new ClaimsIdentity(claims, "token");
+                var principal = new ClaimsPrincipal(identity);
+
+                return SignIn(principal);
             }
             catch (Exception ex)
             {

@@ -46,7 +46,6 @@ namespace Leafy.Application.Services
                 ValidateLifetime = true,
                 ValidateAudience = false,
                 ValidateIssuer = false,
-                ClockSkew = TimeSpan.Zero
             }, out SecurityToken validatedToken);
 
             if(validatedToken == null)

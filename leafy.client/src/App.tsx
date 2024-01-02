@@ -6,22 +6,23 @@ import Home from './Pages/Home';
 import Nav from './Components/Navbar';
 import Login from './Pages/Login';
 import Footer from './Components/Footer';
+import User from './Pages/User';
 
 
 
 
 
 function App() {
-    return <div>
+    return (
         <Router>
             <Nav />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={< Login/>} />
+                <Route path="/login" element={< Login />} />
+                <Route path="/users" element={<User />} />
             </Routes>
             <Footer />
         </Router>
-        </div>
-}
+    )}
 
 export default App;

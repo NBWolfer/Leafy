@@ -14,7 +14,7 @@ function PlantList() {
 
     useEffect(() => {
         const fetchPlants = async () => {
-            const response = await fetch(`api/Plans`);
+            const response = await fetch(`api/Plants`);
             console.log(response)
             const plants = await response.json();
             setPlants(plants);

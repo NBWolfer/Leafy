@@ -52,10 +52,7 @@ namespace Leafy.Server.Controllers
             } 
             catch (Exception ex)
             {
-                return BadRequest(JsonSerializer.Serialize(new {
-                    Title = "Hata",
-                    ex.Message,
-                }));
+                return BadRequest(ex);
             }
         }
 
@@ -64,9 +61,9 @@ namespace Leafy.Server.Controllers
         {
             try { 
                 var response = await _mediator.Send(new LoginUserQuery(login.Email, login.Password));
-               
+                
 
-                return Ok(response);
+                return Ok(JsonSerializer.Serialize(response));
             }
             catch (Exception ex)
             {

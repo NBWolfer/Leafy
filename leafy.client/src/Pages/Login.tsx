@@ -1,4 +1,6 @@
 
+import axios from 'axios';
+
 import {
   MDBBtn,
   MDBContainer,
@@ -7,12 +9,30 @@ import {
   MDBCard,
   MDBCardBody,
   MDBInput,
-  MDBIcon
 }
 from 'mdb-react-ui-kit';
 
+const a = 1300;
+window.sessionStorage.setItem('a', a.toString());
+console.log(window.sessionStorage.getItem('a'));
 
 function Login() {
+  const email = 'email';
+  const password = '123';
+  const login = async () => {
+    await axios.post(`api/Auth/loginJWT`,  {
+      email,
+      password
+    })
+    .then(response => {
+      console.log(response);
+      window.sessionStorage.setItem('token', "Bearer "+response.data.JWT);
+    }).catch(error => {
+      console.log(error);
+    });
+    console.log(window.sessionStorage.getItem('token'));
+  }
+
   return (
     <MDBContainer fluid>
 
@@ -25,16 +45,16 @@ function Login() {
               <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
               <p className="text-white-50 mb-5">Please enter your login and password!</p>
               <div id='formControlLg' style={{paddingRight:100}}>
-              <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Email address'  type='email' size="lg"/>
-              <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='Password' type='password' size="lg"/>
+              <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='email'  type='email' size="lg"/>
+              <MDBInput wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='password' type='password' size="lg"/>
               </div>
               <p className="small mb-3 pb-lg-2"><a className="text-white-50" href="#!">Forgot password?</a></p>
-              <MDBBtn outline className='mx-2 px-5' color='white' size='lg' style={{marginBottom:70}} >
+              <MDBBtn id='loginbtn' onClick={login} outline className='mx-2 px-5' color='white' size='lg' style={{marginBottom:70}} >
                 Login
               </MDBBtn>
 
               <div>
-                <p className="mb-0">Don't have an account? <a href="#!" className="text-white-50 fw-bold">Sign Up</a></p>
+                <p  className="mb-0">Don't have an account? <a href="#!" className="text-white-50 fw-bold">Sign Up</a></p>
 
               </div>
             </MDBCardBody>

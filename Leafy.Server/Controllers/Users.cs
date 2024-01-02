@@ -9,7 +9,6 @@ using System.Security.Claims;
 namespace Leafy.Server.Controllers
 {
     [Authorize]
-    [ServiceFilter(typeof(ExceptionFilter))]
     [Route("api/[controller]")]
     [ApiController]
     public class Users : ControllerBase

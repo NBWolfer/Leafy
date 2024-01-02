@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import menuicon from "../Images/menu50.png";
 import { OffcanvasBody } from "react-bootstrap";
-import fontadi from "../assets/fonts/LibreBaskerville-Bold.ttf";
+/*import fontadi from "../assets/fonts/LibreBaskerville-Bold.ttf";*/
 
 function Navbar() {
   //show hide offcanvas

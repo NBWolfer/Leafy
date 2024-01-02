@@ -4,9 +4,10 @@ using Leafy.Application.Features.Queries.UserQueries;
 using Leafy.Application.Interfaces;
 using Leafy.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -62,9 +63,10 @@ namespace Leafy.Server.Controllers
         public async Task<IActionResult> LoginJWT([FromBody] LoginModel login)
         {
             try { 
-            var response = await _mediator.Send(new LoginUserQuery(login.Email, login.Password));
+                var response = await _mediator.Send(new LoginUserQuery(login.Email, login.Password));
+               
 
-            return Ok(response);
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -80,6 +82,31 @@ namespace Leafy.Server.Controllers
         public async Task<IActionResult> Logout()
         {
             return SignOut("Cookie-0");
+        }
+
+        [Authorize(Policy = "adminOnly")]
+        [HttpPost("test")]
+        public async Task<IActionResult> Test()
+        {
+            string token = Request.Headers.Authorization.ToString();
+
+            if (token.StartsWith("Bearer"))
+            {
+                token = token.Substring("Bearer ".Length).Trim();
+            }
+            var handler = new JwtSecurityTokenHandler();
+
+            JwtSecurityToken jwt = handler.ReadJwtToken(token);
+
+            var claims = new Dictionary<string, string>();
+
+            foreach (var claim in jwt.Claims)
+            {
+                claims.Add(claim.Type, claim.Value);
+            }
+            
+
+            return Ok(claims);
         }
     }
 }

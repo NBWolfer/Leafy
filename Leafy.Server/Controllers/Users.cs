@@ -4,6 +4,7 @@ using Leafy.Application.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -26,11 +27,6 @@ namespace Leafy.Server.Controllers
         public async Task<IActionResult> UserList()
         {
             try {
-                Claim claim = new Claim(ClaimTypes.Role, "user");
-                if(User.Claims.Contains(claim))
-                {
-                    return Unauthorized("User is not authorized!");
-                }
                 var users = await _mediator.Send(new GetUserQuery());
                 if (users is null)
                     return NotFound(JsonSerializer.Serialize(new

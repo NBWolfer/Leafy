@@ -30,7 +30,6 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
                 Name = x.Name,
                 Email = x.Email,
                 Password = x.Password,
-                Token = x.Token,
                 Role = x.Role,
                 RegisteredDate = x.RegisteredDate
                 

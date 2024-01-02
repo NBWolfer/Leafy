@@ -14,6 +14,5 @@ namespace Leafy.Application.Features.Results.UserResults
         public string Password { get; set; }
         public string Role { get; set; }
         public DateTime RegisteredDate { get; set; }
-        public string Token { get; set; }
     }
 }

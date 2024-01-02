@@ -24,7 +24,7 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
         public async Task Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             string salt = _repository.GenerateSalt();
-            string hashedPassword = _repository.HashPassword(request.Password, salt, IUserRepository.Pepper, IUserRepository.Iteration);
+            string hashedPassword = _repository.HashPassword(request.Password, salt, _configuration.GetValue<string>("secretKey") ?? "", IUserRepository.Iteration);
             User user = new User
             {
                 Name = request.Name,
@@ -34,7 +34,7 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
                 Role = request.Role,
                 RegisteredDate = DateTime.Now,
             };
-            user = TokenService.CreateToken(user, _configuration);
+            
             await _repository.CreateAsync(user);
         }
     }

@@ -13,7 +13,7 @@ namespace Leafy.Application.Services
 {
     public class TokenService
     {
-        public static User CreateToken(User user, IConfiguration configuration)
+        public static string CreateToken(User user, IConfiguration configuration)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("secretKey")??"");
@@ -25,23 +25,21 @@ namespace Leafy.Application.Services
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Role, user.Role)
+                    new Claim(ClaimTypes.Role, user.Role),
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };  
             
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
-
-            return user;
+            return tokenHandler.WriteToken(token);
         }
 
-        public static bool CheckToken(User user)
+        public static bool CheckToken(string token, IConfiguration configuration)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("this is my custom Secret key for authnetication");
-            tokenHandler.ValidateToken(user.Token, new TokenValidationParameters
+            var key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("secretKey")??"");
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),

@@ -13,6 +13,8 @@ namespace Leafy.Application.Services
 {
     public class TokenService
     {
+        public static List<string> refreshTokens = [];
+
         public static string CreateToken(User user, IConfiguration configuration)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -27,12 +29,36 @@ namespace Leafy.Application.Services
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, user.Role),
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };  
             
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public static string CreateRefreshToken(User user, IConfiguration configuration)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            byte[] key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("secretKey")??"");
+                
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.Role),
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var refreshToken = tokenHandler.WriteToken(token);
+            refreshTokens.Add(refreshToken);
+            return refreshToken;
         }
 
         public static bool CheckToken(string token, IConfiguration configuration)

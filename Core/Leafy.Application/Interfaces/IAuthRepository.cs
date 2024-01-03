@@ -11,5 +11,6 @@ namespace Leafy.Application.Interfaces
     {
         Task<int> LoginUser(string email, string password);
         Task<User> GetUserByEmail(string email);
+        Task SaveRefreshToken(RefreshToken token);
     }
 }

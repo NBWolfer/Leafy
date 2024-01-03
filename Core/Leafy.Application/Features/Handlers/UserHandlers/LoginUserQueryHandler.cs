@@ -32,7 +32,8 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
                 return new LoginUserQueryResult
                 {
                     UserId = -1,
-                    JWT = string.Empty,
+                    AccessToken = string.Empty,
+                    RefreshToken = string.Empty,
                     Email = request.Email,
                     UserName = string.Empty,
                     Message = "Email kayıtlı değil!",
@@ -47,7 +48,8 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
                     {
                         Email = request.Email,
                         UserName = user.Name,
-                        JWT = TokenService.CreateToken(user, _configuration),
+                        AccessToken = TokenService.CreateToken(user, _configuration),
+                        RefreshToken = TokenService.CreateRefreshToken(user, _configuration),
                         Message = "Giriş başarılı",
                         UserId = user.Id,
                         Role = user.Role,
@@ -59,7 +61,8 @@ namespace Leafy.Application.Features.Handlers.UserHandlers
                     {
                         Email = request.Email,
                         UserName = string.Empty,
-                        JWT = string.Empty,
+                        AccessToken = string.Empty,
+                        RefreshToken = string.Empty,
                         Role = string.Empty,
                         UserId = -1,
                         Message = "Şifre Hatalı"

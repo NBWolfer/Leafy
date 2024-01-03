@@ -1,5 +1,6 @@
 ﻿using Leafy.Application.Interfaces;
 using Leafy.Domain.Entities;
+using Leafy.Persistance.Context;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,16 @@ namespace Leafy.Persistance.Repositories
     {
         private readonly IUserRepository _repository;
         private readonly IConfiguration _configuration;
+        private readonly IRepository<RefreshToken> _tokenRepository;
+        private readonly LeafyContext _context;
 
-        public AuthRepository(IUserRepository repository, IConfiguration configuration)
+
+        public AuthRepository(IUserRepository repository, IConfiguration configuration, LeafyContext context, IRepository<RefreshToken> tokenRepository)
         {
+            _context = context;
             _repository = repository;
             _configuration = configuration;
+            _tokenRepository = tokenRepository;
         }
 
         public async Task<int> LoginUser(string email, string password)
@@ -33,6 +39,11 @@ namespace Leafy.Persistance.Repositories
         {
             User user = await _repository.GetUserByEmailAsync(email);
             return user;
+        }
+
+        public async Task SaveRefreshToken(RefreshToken token)
+        {
+            await _tokenRepository.CreateAsync(token);
         }
 
     }

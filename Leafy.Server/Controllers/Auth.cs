@@ -20,11 +20,17 @@ namespace Leafy.Server.Controllers
     {
         private readonly IAuthRepository _repository;
         private readonly IMediator _mediator;
+        private readonly IAuthService _authService;
+        private readonly IToken _token;
+        private readonly IUserRepository _userRepository;
 
-        public Auth(IAuthRepository authRepository, IMediator mediator)
+        public Auth(IAuthRepository authRepository, IMediator mediator, IAuthService authService, IToken token, IUserRepository userRepository)
         {
             _repository = authRepository;
             _mediator = mediator;
+            _authService = authService;
+            _token = token;
+            _userRepository = userRepository;
         }
 
         [HttpPost("loginCookie")]
@@ -61,20 +67,52 @@ namespace Leafy.Server.Controllers
         {
             try { 
                 var response = await _mediator.Send(new LoginUserQuery(login.Email, login.Password));
-                
-                var claims = new List<Claim>
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(JsonSerializer.Serialize(new
                 {
-                    new Claim(ClaimTypes.Name, response.UserName),
-                    new Claim(ClaimTypes.Email, response.Email),
-                    new Claim(ClaimTypes.Role, response.Role),
-                    new Claim("token", response.JWT)
-                };
+                    Title = "Hata!",
+                    ex.Message,
+                }));
+            }
+        }
 
-                var identity = new ClaimsIdentity(claims, "token");
-                var principal = new ClaimsPrincipal(identity);
+        [HttpPost("loginJWTwithCookie")]
+        public async Task<IActionResult> LoginJWTwithCookie([FromBody] LoginModel login)
+        {
+            try
+            {
+                var principal = await _authService.AuthenticateUserAsync(login.Email, login.Password);
 
 
-                return SignIn(principal);
+                if (principal == null)
+                {
+                    return Unauthorized("Wrong email or password!");
+                }
+
+                var user = await _userRepository.GetUserByEmailAsync(login.Email);
+
+                var accessToken = _token.GenerateAccessToken(principal.Identity as ClaimsIdentity);
+                var refreshToken = _token.GenerateRefreshToken();
+
+                Response.Cookies.Append("refreshToken", refreshToken.Result, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Expires = DateTime.UtcNow.AddDays(7)
+                });
+
+                Response.Cookies.Append("accessToken", accessToken, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Expires = DateTime.UtcNow.AddMinutes(10)
+                });
+
+                return Ok(new { accessToken, refreshToken, user.Email, user.Name});
             }
             catch (Exception ex)
             {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Leafy.Persistance.Migrations
 {
     [DbContext(typeof(LeafyContext))]
-    [Migration("20231229161328_mig_berke_2")]
-    partial class mig_berke_2
+    [Migration("20240103150116_mig_refrehTokens")]
+    partial class mig_refrehTokens
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,26 @@ namespace Leafy.Persistance.Migrations
                     b.ToTable("Plants");
                 });
 
+            modelBuilder.Entity("Leafy.Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Expiration")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Leafy.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -112,10 +132,6 @@ namespace Leafy.Persistance.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Salt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Token")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

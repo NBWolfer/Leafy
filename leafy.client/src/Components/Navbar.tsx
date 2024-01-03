@@ -5,7 +5,8 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import menuicon from "../Images/menu50.png";
 import { OffcanvasBody } from "react-bootstrap";
-/*import fontadi from "../assets/fonts/LibreBaskerville-Bold.ttf";*/
+import fontadi from "../assets/fonts/LibreBaskerville-Bold.ttf";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   //show hide offcanvas
@@ -22,7 +23,7 @@ function Navbar() {
       >
         <div className="container">
           <div style={{  marginLeft: "0px", marginRight: "px" }}>
-            <a href="\"><img src={logo} style={{width: "64", height: "64", background: "transparent"}}/></a>   
+            <Link to="/" replace><img src={logo} style={{width: "64", height: "64", background: "transparent"}}/></Link>   
           </div>
           <span style={{ color: "white", fontSize: "42px", fontFamily: 'fontadi' }}>Leafy</span>
           <Button
@@ -35,23 +36,12 @@ function Navbar() {
       </nav>
       <Offcanvas show={show} onHide={handleClose}>
         <div className="offcanvas-header">
-          <a
+          <Link to="/" replace={true}
             className="link-body-emphasis d-flex align-items-center me-md-auto mb-3 mb-md-0 text-decoration-none"
-            href="/"
           >
-            <svg
-              className="bi bi-box-seam me-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-              style={{ fontSize: "25px" }}
-            >
-              <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"></path>
-            </svg>
-            <span className="fs-4">Leafy</span>
-          </a>
+            <img src={logo} alt="" style={{width: "48", height: "48", background: "transparent"}}/>
+            <span className="fs-4" style={{fontFamily: 'fontadi' }}>Leafy</span>
+          </Link>
           <button
             className="btn-close"
             type="button"
@@ -67,9 +57,8 @@ function Navbar() {
           <hr className="mt-0" />
           <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
-              <a
+              <Link to="/" replace={true}
                 className="nav-link"
-                href="/"
                 style={{color: "white"}}
               >
                 <svg
@@ -86,13 +75,12 @@ function Navbar() {
                   ></path>
                 </svg>
                 Home
-              </a>
+              </Link>
             </li>
             
             <li className="nav-item">
-              <a
+              <Link to="/login" replace={true}
                 className="nav-link"
-                href="/login"
                 style={{color: "white"}}
               >
                 <svg
@@ -106,7 +94,7 @@ function Navbar() {
                   <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"></path>
                 </svg>{" "}
                 Üye ol{" "}
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a

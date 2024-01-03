@@ -11,10 +11,6 @@ import {
 }
 from 'mdb-react-ui-kit';
 
-const a = 1300;
-window.sessionStorage.setItem('a', a.toString());
-console.log(window.sessionStorage.getItem('a'));
-
 function Login() {
   var email = '';
   var password = '';

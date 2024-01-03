@@ -4,27 +4,37 @@
 .footer {
     font-size: 18px;
     width: 100%;
-
+    max-height: fit-content!important;
     background-color: #333;
     color: #fff;
-    padding: 30px 0;
+    padding: 10px 0;
 }
   
 .container {
     width: 100%;
     margin: 0 auto;
-    padding: 0 50px;
+    padding: 0px;
 }
   
 .footer-content {
     display: grid;
     grid-template-columns: 25% 50% 25%;
+    padding-top: 1rem;
 }
 
-  
+.footer-logo {
+    display: flex;
+    align-items: center;
+} 
+
+.footer-logo-img {
+    width: 70px;
+    height: 70px;
+
+}
 .footer-menu {
     list-style: none;
-    padding: 0;
+    padding: 30px;
     margin: 0;
     text-align: center;
 }
@@ -41,27 +51,6 @@
 .footer-menu a {
     color: #fff;
     text-decoration: none;
-}
-  
-.social-icons {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-  
-.social-icons li {
-    display: inline-block;
-    margin-right: 10px;
-}
-  
-.social-icons li:last-child {
-    margin-right: 0;
-}
-  
-.social-icons a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 20px;
 }
   
 .footer-bottom {

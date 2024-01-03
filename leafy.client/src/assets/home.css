@@ -73,7 +73,10 @@ body{
     margin-left:3rem;
 }
 .btn:hover{
-    letter-spacing:.2rem;
+    border: solid 1px #0f2515;
+    opacity: 0.8;
+    background-color: #0f2515;
+    color: #fff;
 }
 .heading {
     text-align: center;
@@ -118,4 +121,15 @@ body{
     padding:1rem 0;
     line-height:1.8;
     
+}
+
+.about .row .content .btn{
+    margin-top:1rem;
+    margin-left:0;
+    display:inline-block;
+    padding:.9rem 3rem;
+    font-size:1.7rem;
+    color:#fff;
+    background:#0f2515;
+    cursor:pointer;
 }

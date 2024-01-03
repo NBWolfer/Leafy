@@ -58,8 +58,8 @@ function Login() {
                               <MDBInput id='email' onChange={getEmail} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='email' type='email' size="lg" />
                               <MDBInput id='password' onChange={getPassword} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='password' type='password' size="lg" />
               </div>
-              <p className="small mb-3 pb-lg-2"><a className="text-white-50" href="#!">Forgot password?</a></p>
-              <MDBBtn id='loginbtn' onClick={login} outline className='mx-2 px-5' color='white' size='lg' style={{marginBottom:70}} >
+                          <p className="small mb-3 pb-lg-2"><a className="text-white-50" href="#!">Forgot password?</a></p>
+                          <MDBBtn id='loginbtn' onClick={login} outline color='white' size='lg' style={{ marginBottom: 70, marginLeft: 0 }} >
                 Login
               </MDBBtn>
 

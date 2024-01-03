@@ -1,7 +1,6 @@
 //import "../assets/bootstrap.min.css";
 import { useState } from "react";
 import logo from "../Images/calendula.gif";
-import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import menuicon from "../Images/menu50.png";
 import { OffcanvasBody } from "react-bootstrap";
@@ -19,19 +18,19 @@ function Navbar() {
     <>
       <nav
         className="navbar navbar-expand-md mt-auto py-3"
-              style={{ background: "#12391E" }}
+              style={{ background: "#12391E"}}
       >
         <div className="container">
           <div style={{  marginLeft: "0px", marginRight: "px" }}>
             <Link to="/" replace><img src={logo} style={{width: "64", height: "64", background: "transparent"}}/></Link>   
           </div>
           <span style={{ color: "white", fontSize: "42px", fontFamily: 'fontadi' }}>Leafy</span>
-          <Button
+          <button
             onClick={handleShow}
-            style={{ background: "transparent", border: "none" }}
+            style={{ background: "transparent", border: "none", padding: "0px",}}
           >
             <img src={menuicon} alt="" />
-          </Button>
+          </button>
         </div>
       </nav>
       <Offcanvas show={show} onHide={handleClose}>

@@ -22,8 +22,12 @@ function User() {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            await axios.get(`api/Users`).then(response => {
-                console.log(response);
+            await axios.get(`api/Users`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then(response => {
+                console.log(response.headers.getAuthorization?.toString());
                 const users = response.data;
                 setUsers(users);
             }).catch(error => {

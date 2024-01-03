@@ -73,6 +73,7 @@ namespace Leafy.Server.Controllers
                 var identity = new ClaimsIdentity(claims, "token");
                 var principal = new ClaimsPrincipal(identity);
 
+
                 return SignIn(principal);
             }
             catch (Exception ex)

@@ -36,15 +36,14 @@
         font-size: 6rem;
         text-transform: uppercase;
         color: #0f2515;
-        
-
+        margin-left: 3rem;
     }
     .home .content p {
         font-size: 2rem;
         line-height: 1.8;
         padding: 1rem 0;
         color: #0f2515;
-        
+        margin-left:3rem;
     }
 .html{
     font-size:62.5%;
@@ -58,7 +57,7 @@ html::-webkit-scrollbar-track{
 }
 html::-webkit-scrollbar-thumb{
     background:#fff;
-    border-radius:5rem;
+    border-radius:4rem;
 }
 body{
     background:#fff;
@@ -71,7 +70,7 @@ body{
     color: #fff;
     background: #0f2515;
     cursor: pointer;
-    margin-left:1rem;
+    margin-left:3rem;
 }
 .btn:hover{
     letter-spacing:.2rem;
@@ -87,18 +86,21 @@ body{
     color:#000000;
     text-transform:uppercase;
 }
+
 .about .row{
     display:flex;
     align-items:center;
     background:#164824;
     flex-wrap:wrap;
+    width:100%!important;
+    margin:0!important;
 }
 .about .row .image{
     flex:1 1 45rem;
 }   
 .about .row .image img{
     width:100%;
-    
+    padding:2rem;
 }
 .about .row .content{
     flex:1 1 45rem;

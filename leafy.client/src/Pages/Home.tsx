@@ -14,7 +14,6 @@ function Home() {
             </section>
 
     <section className="about" id="about">
-        <h1 className="heading"> leafy</h1>
         <div className="row">
             <div className="image">
                     <img src={rsm} alt=""></img>

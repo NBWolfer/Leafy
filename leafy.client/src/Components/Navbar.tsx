@@ -18,7 +18,7 @@ function Navbar() {
     <>
       <nav
         className="navbar navbar-expand-md mt-auto py-3"
-        style={{ background: "#318b06a6" }}
+              style={{ background: "#12391E" }}
       >
         <div className="container">
           <div style={{  marginLeft: "0px", marginRight: "px" }}>

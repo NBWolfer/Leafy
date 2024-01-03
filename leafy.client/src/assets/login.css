@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
 
+.login {
+    min-height: 100vh;
+    display: flex;
+    background: url(../Images/tropical-green-leaves-background.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
 .btnLogin {
     background-color: #164824;
     color: white;

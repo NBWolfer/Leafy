@@ -43,6 +43,7 @@ function Login() {
     }
 
   return (
+    <div className='login'>
     <MDBContainer fluid>
 
       <MDBRow className='d-flex justify-content-center align-items-center h-100'>
@@ -73,6 +74,7 @@ function Login() {
       </MDBRow>
 
     </MDBContainer>
+    </div>
   );
 }
 

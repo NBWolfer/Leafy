@@ -1,8 +1,7 @@
-
+import '../assets/Login.css';
 import axios from 'axios';
 
 import {
-  MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
@@ -59,9 +58,9 @@ function Login() {
                               <MDBInput id='password' onChange={getPassword} wrapperClass='mb-4 mx-5 w-100' labelClass='text-white' label='password' type='password' size="lg" />
               </div>
                           <p className="small mb-3 pb-lg-2"><a className="text-white-50" href="#!">Forgot password?</a></p>
-                          <MDBBtn id='loginbtn' onClick={login} outline color='white' size='lg' style={{ marginBottom: 70, marginLeft: 0 }} >
+                          <button id='loginbtn' className="btnLogin" onClick={login} color='white'>
                 Login
-              </MDBBtn>
+              </button>
 
               <div>
                 <p  className="mb-0">Don't have an account? <a href="#!" className="text-white-50 fw-bold">Sign Up</a></p>

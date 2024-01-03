@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
+
+.btnLogin {
+    background-color: #164824;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    transition: 0.5s;
+}
+
+    .btnLogin:hover {
+        background-color: #135525;
+    }
+    .btnLogin:active {
+        background-color: #195F2D;
+    }

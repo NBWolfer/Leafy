@@ -51,5 +51,12 @@ namespace Leafy.Server.Controllers
             await _mediator.Send(command);
             return Ok("Plant Updated!");
         }
+
+        [HttpGet("/withDisease")]
+        public async Task<IActionResult> GetPlantWithDisease()
+        {
+            var values = await _mediator.Send(new GetPlantWithDiseaseQuery());
+            return Ok(values);
+        }
     }
 }

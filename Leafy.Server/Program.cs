@@ -15,6 +15,7 @@ builder.Services.AddScoped<LeafyContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IPlantRepository, PlantRepository>();
 
 builder.Services.AddApplicationServices(builder.Configuration);
 

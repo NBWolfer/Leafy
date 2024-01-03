@@ -15,7 +15,7 @@ function Login() {
   var email = '';
   var password = '';
   const login = async () => {
-    await axios.post(`api/Auth/loginJWT`,  {
+    await axios.post(`api/Auth/loginJWTwithCookie`,  {
       email,
       password
     })

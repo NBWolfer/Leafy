@@ -1,7 +1,5 @@
-import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { redirect } from 'react-router-dom';
 
 interface User {
     id: number,
@@ -13,22 +11,15 @@ interface User {
 }
 
 function User() {
-    const token = Cookies.get('token');
     const [users, setUsers] = useState<User[]>([]);
-    console.log(token);
-    if (token === undefined) {
-        redirect('/login');
-    }
+
+    
 
     useEffect(() => {
         const fetchUsers = async () => {
-            await axios.get(`api/Users`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(response => {
-                console.log(response.headers.getAuthorization?.toString());
-                const users = response.data;
+            await axios.get(`api/Users`).then(response => {
+                console.log(response);
+                const users = response.data.data.json();
                 setUsers(users);
             }).catch(error => {
                 console.log(error);

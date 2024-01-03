@@ -3,6 +3,7 @@ using Leafy.Application.Services;
 using Leafy.Persistance.Context;
 using Leafy.Persistance.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
@@ -24,20 +25,18 @@ builder.Services.AddApplicationServices(builder.Configuration);
 
 builder.Services.AddControllers();
 
-builder.Services.AddAuthentication("token").AddCookie("token", options =>
+builder.Services.AddAuthentication("accessToken").AddCookie("accessToken", options =>
 {
-    options.Cookie.Name = "token";
-    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    options.Cookie.Name = "accessToken";
     options.Events.OnRedirectToAccessDenied = context =>
     {
         context.Response.StatusCode = 403;
         return Task.CompletedTask;
     };
 })
-    .AddCookie("Cookie-0", options =>
+    .AddCookie("refreshToken", options =>
     {
-        options.Cookie.Name = "Cookie-0";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+        options.Cookie.Name = "refreshToken";
         options.Events.OnRedirectToAccessDenied = context =>
         {
             context.Response.StatusCode = 403;
@@ -52,23 +51,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("admin-user", policy => policy.RequireRole("user","admin"));
 });
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("secretKey") ?? "")),
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ValidateLifetime = true,
-    };
-});
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

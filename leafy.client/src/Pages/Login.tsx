@@ -21,7 +21,7 @@ function Login() {
     })
     .then(response => {
       console.log(response);
-      window.sessionStorage.setItem('token', "Bearer "+response.data.JWT);
+      window.sessionStorage.setItem('token', "Bearer "+response.data.accessToken);
     }).catch(error => {
       console.log(error);
     });

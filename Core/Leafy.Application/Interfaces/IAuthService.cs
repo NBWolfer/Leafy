@@ -41,7 +41,6 @@ namespace Leafy.Application.Interfaces
             {
                 new Claim(ClaimTypes.Name, username),
                 new Claim(ClaimTypes.Role, user.Role),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
             };
 

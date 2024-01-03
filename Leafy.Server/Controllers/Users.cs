@@ -34,11 +34,7 @@ namespace Leafy.Server.Controllers
                         Title = "Hata!",
                         Message = "Kullanıcılar getirilemedi!"
                     }));
-                return Ok(JsonSerializer.Serialize(new
-                {
-                    Title = "GetAllUsers",
-                    Data = users
-                }));
+                return Ok(users);
             }
             catch (Exception ex)
             {

@@ -102,6 +102,7 @@ namespace Leafy.Server.Controllers
                 {
                     HttpOnly = true,
                     Secure = true,
+                    SameSite = SameSiteMode.None,
                     Expires = DateTime.UtcNow.AddDays(7)
                 });
 
@@ -109,6 +110,7 @@ namespace Leafy.Server.Controllers
                 {
                     HttpOnly = true,
                     Secure = true,
+                    SameSite = SameSiteMode.None,
                     Expires = DateTime.UtcNow.AddMinutes(10)
                 });
 

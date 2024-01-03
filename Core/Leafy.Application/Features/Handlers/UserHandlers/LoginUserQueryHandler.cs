@@ -5,12 +5,6 @@ using Leafy.Application.Services;
 using Leafy.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Leafy.Application.Features.Handlers.UserHandlers
 {
     public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, LoginUserQueryResult>

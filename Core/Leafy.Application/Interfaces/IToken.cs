@@ -13,7 +13,7 @@ namespace Leafy.Application.Interfaces
     public interface IToken
     {
         string GenerateAccessToken(ClaimsIdentity identity);
-        Task<string> GenerateRefreshToken();
+        Task<string> GenerateRefreshToken(ClaimsIdentity identity);
     }
 
     public class Token : IToken
@@ -43,20 +43,21 @@ namespace Leafy.Application.Interfaces
             return tokenHandler.WriteToken(token);
         }
 
-        public async Task<string> GenerateRefreshToken()
+        public async Task<string> GenerateRefreshToken(ClaimsIdentity identity)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("secretKey") ?? "");
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Subject = identity,
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var refreshToken = tokenHandler.WriteToken(token);
-            await _authRepository.SaveRefreshToken(new Domain.Entities.RefreshToken { Token = refreshToken });
+            await _authRepository.SaveRefreshToken(new Domain.Entities.RefreshToken { Token = refreshToken , Expiration= DateTime.UtcNow.AddDays(7)});
             return refreshToken;
         }
     }

@@ -6,9 +6,12 @@ using Leafy.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
 
 namespace Leafy.Server.Controllers
@@ -23,9 +26,11 @@ namespace Leafy.Server.Controllers
         private readonly IAuthService _authService;
         private readonly IToken _token;
         private readonly IUserRepository _userRepository;
+        private readonly IConfiguration _configuration;
 
-        public Auth(IAuthRepository authRepository, IMediator mediator, IAuthService authService, IToken token, IUserRepository userRepository)
+        public Auth(IAuthRepository authRepository, IMediator mediator, IAuthService authService, IToken token, IUserRepository userRepository, IConfiguration configuration)
         {
+            _configuration = configuration;
             _repository = authRepository;
             _mediator = mediator;
             _authService = authService;
@@ -86,17 +91,15 @@ namespace Leafy.Server.Controllers
             try
             {
                 var principal = await _authService.AuthenticateUserAsync(login.Email, login.Password);
-
+                var user = await _userRepository.GetUserByEmailAsync(login.Email);
 
                 if (principal == null)
                 {
                     return Unauthorized("Wrong email or password!");
                 }
 
-                var user = await _userRepository.GetUserByEmailAsync(login.Email);
-
                 var accessToken = _token.GenerateAccessToken(principal.Identity as ClaimsIdentity);
-                var refreshToken = _token.GenerateRefreshToken();
+                var refreshToken = _token.GenerateRefreshToken(principal.Identity as ClaimsIdentity);
 
                 Response.Cookies.Append("refreshToken", refreshToken.Result, new CookieOptions
                 {
@@ -114,7 +117,9 @@ namespace Leafy.Server.Controllers
                     Expires = DateTime.UtcNow.AddMinutes(10)
                 });
 
-                return Ok(new { accessToken, refreshToken, user.Email, user.Name});
+                Response.HttpContext.User = principal;
+
+                return Ok(new {user.Name, user.Email, user.Id, user.RegisteredDate});
             }
             catch (Exception ex)
             {
@@ -136,25 +141,25 @@ namespace Leafy.Server.Controllers
         [HttpPost("test")]
         public async Task<IActionResult> Test()
         {
-            string token = Request.Headers.Authorization.ToString();
+            var accessToken = Request.Cookies["accessToken"];
 
-            if (token.StartsWith("Bearer"))
-            {
-                token = token.Substring("Bearer ".Length).Trim();
-            }
             var handler = new JwtSecurityTokenHandler();
 
-            JwtSecurityToken jwt = handler.ReadJwtToken(token);
-
-            var claims = new Dictionary<string, string>();
-
-            foreach (var claim in jwt.Claims)
+            var validateParams = new TokenValidationParameters
             {
-                claims.Add(claim.Type, claim.Value);
-            }
-            
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration.GetValue<string>("secretKey")??"")),
+                ValidateLifetime = true,
+                ValidateAudience = false,
+                ValidateIssuer = false,
+            };
 
-            return Ok(claims);
+            var principal = handler.ValidateToken(accessToken, validateParams, out SecurityToken validatedToken);
+            if (validatedToken != null)
+            {
+                Response.HttpContext.User = principal;
+            }
+            return Ok("Hello from test-route");
         }
     }
 }

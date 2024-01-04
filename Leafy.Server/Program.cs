@@ -1,11 +1,14 @@
 using Leafy.Application.Interfaces;
 using Leafy.Application.Services;
+using Leafy.Domain.Entities;
 using Leafy.Persistance.Context;
 using Leafy.Persistance.Repositories;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
@@ -28,28 +31,25 @@ builder.Services.AddControllers();
 builder.Services.AddAuthentication("accessToken").AddCookie("accessToken", options =>
 {
     options.Cookie.Name = "accessToken";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.None;
     options.Events.OnRedirectToAccessDenied = context =>
     {
         context.Response.StatusCode = 403;
         return Task.CompletedTask;
     };
-})
-    .AddCookie("refreshToken", options =>
-    {
-        options.Cookie.Name = "refreshToken";
-        options.Events.OnRedirectToAccessDenied = context =>
-        {
-            context.Response.StatusCode = 403;
-            return Task.CompletedTask;
-        };
-    });
-
-builder.Services.AddAuthorization(options =>
+}).AddCookie("refreshToken", options =>
 {
-    options.AddPolicy("adminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
-    options.AddPolicy("user", policy => policy.RequireClaim(ClaimTypes.Role, "user"));
-    options.AddPolicy("admin-user", policy => policy.RequireRole("user","admin"));
+    options.Cookie.Name = "refreshToken";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.None;
 });
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("adminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin"))
+    .AddPolicy("user", policy => policy.RequireClaim(ClaimTypes.Role, "user"))
+    .AddPolicy("admin-user", policy => policy.RequireRole("user","admin"));
+
 
 
 

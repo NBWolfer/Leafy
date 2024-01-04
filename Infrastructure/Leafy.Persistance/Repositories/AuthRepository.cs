@@ -1,6 +1,7 @@
 ﻿using Leafy.Application.Interfaces;
 using Leafy.Domain.Entities;
 using Leafy.Persistance.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,12 @@ namespace Leafy.Persistance.Repositories
         private readonly LeafyContext _context;
 
 
-        public AuthRepository(IUserRepository repository, IConfiguration configuration, LeafyContext context, IRepository<RefreshToken> tokenRepository)
+        public AuthRepository(IUserRepository repository, IConfiguration configuration, IRepository<RefreshToken> tokenRepository, LeafyContext context)
         {
-            _context = context;
             _repository = repository;
             _configuration = configuration;
             _tokenRepository = tokenRepository;
+            _context = context;
         }
 
         public async Task<int> LoginUser(string email, string password)
@@ -46,5 +47,15 @@ namespace Leafy.Persistance.Repositories
             await _tokenRepository.CreateAsync(token);
         }
 
+        public async Task DeleteRefreshToken(RefreshToken token)
+        {
+            await _tokenRepository.RemoveAsync(token);
+        }
+
+        public async Task<DateTime> GetTaskExpToken(RefreshToken token)
+        {
+            var exp = await _context.Set<RefreshToken>().Where(x => x.Token == token.Token).Select(x => x.Expiration).FirstOrDefaultAsync();
+            return exp;
+        }
     }
 }

@@ -15,17 +15,15 @@ function Login() {
   var email = '';
   var password = '';
   const login = async () => {
-    await axios.post(`api/Auth/loginJWT`,  {
+    await axios.post(`api/Auth/loginJWTwithCookie`,  {
       email,
       password
     })
     .then(response => {
       console.log(response);
-      window.sessionStorage.setItem('token', "Bearer "+response.data.accessToken);
     }).catch(error => {
       console.log(error);
     });
-    console.log(window.sessionStorage.getItem('token'));
     }
 
     const getEmail = () => {

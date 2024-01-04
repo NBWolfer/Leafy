@@ -12,18 +12,23 @@ interface User {
 
 function User() {
     const [users, setUsers] = useState<User[]>([]);
-
-    
+    //const fetchData = async () => {
+    //    const response = await axios.post(`api/Users/GetUsers`).catch(error => {
+    //        console.log(error);
+    //    });
+    //    console.log(response);
+    //    return response;
+    //}
+    //fetchData();
 
     useEffect(() => {
         const fetchUsers = async () => {
-            await axios.get(`api/Users`).then(response => {
-                console.log(response);
-                const users = response.data.data.json();
-                setUsers(users);
-            }).catch(error => {
-                console.log(error);
+            const response = await axios.get(`api/Users/GetUsers`, { responseType: 'json' }).catch(error => {
+                    console.log(error);
             });
+            console.log(response);
+            const values = response.request.response.data;
+            setUsers(values);
         }
         fetchUsers();
     }, []);
@@ -49,7 +54,6 @@ function User() {
         <div>
             <h1>Users</h1>
             {content}
-
         </div>
     )
 }

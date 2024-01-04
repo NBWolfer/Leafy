@@ -39,12 +39,12 @@ namespace Leafy.Application.Interfaces
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Role, user.Role),
                 new Claim(ClaimTypes.Email, user.Email),
             };
 
-            var identity = new ClaimsIdentity(claims, "Bearer");
+            var identity = new ClaimsIdentity(claims, "accessToken");
             return new ClaimsPrincipal(identity);
         }
     }

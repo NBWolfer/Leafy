@@ -1,5 +1,6 @@
 import '../assets/aboutus.css';
 import rs from '../Images/cute-happy-funny-monstera-plant-pot-vector-cartoon-character-illustration-design-isolated_92289-1278.avif';
+import r from '../Images/personal-growth.png'
 function Home() {
     return (
         <>
@@ -16,6 +17,63 @@ function Home() {
                     </div>
                     <div className="hero-image">
                         <img src={rs} alt=""></img>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div className="con">
+                    <div className="head">
+                        <h1>Our Team</h1>
+                    </div>
+                    <div className="sub-container">
+                    <div className="teams">
+                        <img src={r} alt=""></img>
+                        <div className="name">Eda Dilek</div>
+                        <div className="desig">Developer</div>
+                        <div className="about">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare congue nulla in cursus. In ut elit in nulla gravida efficitur et eget diam. Fusce et tortor dapibus, iaculis nibh eu, lobortis sem. Fusce tincidunt mauris in tellus volutpat egestas.</div>
+                        <div className="social-links">
+                            <a href="#"><i className="fab fa-facebook"></i></a>
+                            <a href="#"><i className="fab fa-instagram"></i></a>
+                            <a href="#"><i className="fab fa-twitter"></i></a>
+                            <a href="#"><i className="fab fa-github"></i></a>
+                        </div> 
+                    </div>
+                    <div className="teams">
+                        <img src={r} alt=""></img>
+                        <div className="name">Mahmut Enes Cevik</div>
+                        <div className="desig">Developer</div>
+                        <div className="about">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare congue nulla in cursus. In ut elit in nulla gravida efficitur et eget diam. Fusce et tortor dapibus, iaculis nibh eu, lobortis sem. Fusce tincidunt mauris in tellus volutpat egestas.</div>
+                        <div className="social-links">
+                            <a href="#"><i className="fab fa-facebook"></i></a>
+                            <a href="#"><i className="fab fa-instagram"></i></a>
+                            <a href="#"><i className="fab fa-twitter"></i></a>
+                            <a href="#"><i className="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div className="teams">
+                        <img src={r} alt=""></img>
+                        <div className="name">Berke Erkan Dogan</div>
+                        <div className="desig">Developer</div>
+                        <div className="about">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare congue nulla in cursus. In ut elit in nulla gravida efficitur et eget diam. Fusce et tortor dapibus, iaculis nibh eu, lobortis sem. Fusce tincidunt mauris in tellus volutpat egestas.</div>
+                        <div className="social-links">
+                            <a href="#"><i className="fab fa-facebook"></i></a>
+                            <a href="#"><i className="fab fa-instagram"></i></a>
+                            <a href="#"><i className="fab fa-twitter"></i></a>
+                            <a href="#"><i className="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div className="teams">
+                        <img src={r} alt=""></img>
+                        <div className="name">Ertan Soyalp</div>
+                        <div className="desig">Developer</div>
+                        <div className="about">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare congue nulla in cursus. In ut elit in nulla gravida efficitur et eget diam. Fusce et tortor dapibus, iaculis nibh eu, lobortis sem. Fusce tincidunt mauris in tellus volutpat egestas.</div>
+                        <div className="social-links">
+                            <a href="#"><i className="fab fa-facebook"></i></a>
+                            <a href="#"><i className="fab fa-instagram"></i></a>
+                            <a href="#"><i className="fab fa-twitter"></i></a>
+                            <a href="#"><i className="fab fa-github"></i></a>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </section>

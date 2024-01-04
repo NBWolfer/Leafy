@@ -14,7 +14,7 @@ function Footer() {
                 <a href="#">Home</a>
               </li>
               <li>
-                <a href="#">About</a>
+                <a className="footer-link" href="/About" style={{ color: "white" }}>About Us</a>
               </li>
               <li>
                 <a href="#">Services</a>

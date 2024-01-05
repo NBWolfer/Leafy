@@ -18,7 +18,7 @@
   
 .footer-content {
     display: grid;
-    grid-template-columns: 25% 50% 25%;
+    grid-template-columns: 25% 95%;
     padding-top: 1rem;
 }
 
@@ -60,6 +60,7 @@
   
 .footer-bottom p {
     margin: 0;
+    font-size: small;
 }
   
 @media (max-width: 768px) {

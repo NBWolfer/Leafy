@@ -92,6 +92,9 @@ body{
     color:#000000;
     text-transform:uppercase;
 }
+.about{
+ margin: 0!important;
+}
 
 .about .row{
     display:flex;

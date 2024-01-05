@@ -8,6 +8,14 @@
     background-position: center;
 }
 
+.signup {
+    min-height: 100vh;
+    display: flex;
+    background: url(../Images/grass.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
 .btnLogin {
     background-color: #164824;
     color: white;

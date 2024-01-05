@@ -13,9 +13,8 @@ import Scanplant from './Pages/Scanplant';
 
 
 
-
-
 function App() {
+    
     return <div>
         <Router>
             <Nav />

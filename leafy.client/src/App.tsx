@@ -7,7 +7,8 @@ import About from './Pages/AboutUs';
 import Nav from './Components/Navbar';
 import Login from './Pages/Login';
 import Footer from './Components/Footer';
-import Users from './Pages/User';
+import User from './Pages/User';
+import Signup from './Pages/Signup';
 
 
 
@@ -20,7 +21,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={< Login />} />
-                <Route path="/About" element={<About />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/users"  element={<User/>}  />
+                <Route path='/signup' element={<Signup/>}/>
             </Routes>
             <Footer />
         </Router>

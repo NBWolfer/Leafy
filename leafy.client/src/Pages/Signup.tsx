@@ -46,12 +46,8 @@ const emailRegex = (mail: string) => {
 };
 
 function controller() {
-  console.log(username);
-  console.log(email);
-  console.log(password);
-  console.log(confirmPassword);
   if (email == "" || password == "" || confirmPassword == "" || username == "") {
-    alert('Lütfen boş form bırakmayıınız.')
+    alert('Lütfen bilgileri eksiksiz doldurduğunuzdan emin olunuz.')
   }
   else if(emailRegex(email) == false){
     alert('Lütfen geçerli bir email adresi giriniz.')
@@ -63,7 +59,7 @@ function controller() {
     alert('Lütfen şifrelerin aynı olduğundan emin olunur.')
   }
   else(
-    alert('başarılı')
+    alert('başarılı') // eğer doğru ile fonksiyon çağırıcağız. 
   )
 
 

@@ -7,6 +7,7 @@ import About from './Pages/AboutUs';
 import Nav from './Components/Navbar';
 import Login from './Pages/Login';
 import Footer from './Components/Footer';
+import Users from './Pages/User';
 
 
 
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={< Login />} />
                 <Route path="/About" element={<About />} />
+                <Route path="/Users" element={<Users />} />
             </Routes>
             <Footer />
         </Router>

@@ -1,15 +1,12 @@
 ﻿using Leafy.Application.DTOs;
-using Leafy.Application.Features.Commands.UserCommands;
 using Leafy.Application.Features.Queries.UserQueries;
 using Leafy.Application.Interfaces;
 using Leafy.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;

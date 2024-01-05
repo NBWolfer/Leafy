@@ -1,11 +1,9 @@
 ﻿using Leafy.Application.Features.Commands.UserCommands;
 using Leafy.Application.Features.Queries.UserQueries;
 using Leafy.Application.Interfaces;
-using Leafy.Application.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -46,16 +44,7 @@ namespace Leafy.Server.Controllers
                 var accessToken = Request.Cookies["accessToken"];
                 if(accessToken == null)
                 {
-                    var principal = handler.ValidateToken(accessToken, validateParams, out SecurityToken validatedToken);
                     var refreshToken = Request.Cookies["refreshToken"];
-                    if (validatedToken != null)
-                    {
-                        Response.HttpContext.User = principal;
-                    }
-                    else
-                    {
-                        return Unauthorized("Bu istek için yetkili değilsiniz!!");
-                    }
                     if(refreshToken == null)
                     {
                         return Ok("Bu istek için yetkili değilsiniz!");
@@ -78,7 +67,16 @@ namespace Leafy.Server.Controllers
                         Response.HttpContext.User = principalRefreshToken;
                     }
                 }
+                
+                var principal = handler.ValidateToken(accessToken, validateParams, out SecurityToken validatedToken);
+                if (validatedToken != null)
+                {
+                    Response.HttpContext.User = principal;
+                }
+                Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
 
+                if (claim.Value != "admin")
+                    return Ok("Bu istek için yetkili değilsiniz!");
                 var users = await _mediator.Send(new GetUserQuery());
                 if (users is null)
                     return NotFound(JsonSerializer.Serialize(new

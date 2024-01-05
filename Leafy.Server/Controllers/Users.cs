@@ -74,7 +74,10 @@ namespace Leafy.Server.Controllers
                     Response.HttpContext.User = principal;
                 }
                 Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
-
+                if(claim == null)
+                {
+                    return Ok("Bu istek için yetkili değilsiniz!");
+                }
                 if (claim.Value != "admin")
                     return Ok("Bu istek için yetkili değilsiniz!");
                 var users = await _mediator.Send(new GetUserQuery());

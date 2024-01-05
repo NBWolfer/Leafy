@@ -19,7 +19,6 @@ namespace Leafy.Server.Controllers
     [ApiController]
     public class Auth : ControllerBase
     {
-        private readonly IAuthRepository _repository;
         private readonly IMediator _mediator;
         private readonly IAuthService _authService;
         private readonly IToken _token;
@@ -29,7 +28,6 @@ namespace Leafy.Server.Controllers
         public Auth(IAuthRepository authRepository, IMediator mediator, IAuthService authService, IToken token, IUserRepository userRepository, IConfiguration configuration)
         {
             _configuration = configuration;
-            _repository = authRepository;
             _mediator = mediator;
             _authService = authService;
             _token = token;
@@ -160,7 +158,6 @@ namespace Leafy.Server.Controllers
         [HttpPost("getStatus")]
         public async Task<IActionResult> GetStatus()
         {
-            var accessToken = Request.Cookies["accessToken"];
             var refreshToken = Request.Cookies["refreshToken"];
             if(refreshToken == null)
             {
@@ -181,17 +178,24 @@ namespace Leafy.Server.Controllers
                 ValidateIssuer = false,
             };
 
-            var principal = handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedToken);
-            if (principal == null)
+            handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedToken);
+            if (validatedToken == null)
             {
                 return Ok(new
                 {
                     status = false,
-                    info = "Geçerli kullanıcı değil!"
+                    info = ""
                 });
             }
             Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
-
+            if(claim == null)
+            {
+                   return Ok(new
+                   {
+                    status = false,
+                    info = ""
+                });
+            }
             if (claim.Value != "admin")
                 return Ok(new
                 {

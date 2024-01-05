@@ -101,17 +101,14 @@ namespace Leafy.Server.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp(SignUpCommand command, [FromBody] SignUpModel signUpModel)
+        public async Task<IActionResult> SignUp(SignUpCommand command)
         {
             try
             {
-                command.Name = signUpModel.Name;
-                command.Email = signUpModel.Email;
-                command.Password = signUpModel.Password;
                 await _mediator.Send(command);
 
-                var principal = await _authService.AuthenticateUserAsync(signUpModel.Email, signUpModel.Password);
-                var user = await _userRepository.GetUserByEmailAsync(signUpModel.Email);
+                var principal = await _authService.AuthenticateUserAsync(command.Email, command.Password);
+                var user = await _userRepository.GetUserByEmailAsync(command.Email);
 
                 if (principal == null)
                 {

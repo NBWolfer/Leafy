@@ -1,8 +1,7 @@
 import '../assets/aboutus.css';
 import rs from '../Images/cute-happy-funny-monstera-plant-pot-vector-cartoon-character-illustration-design-isolated_92289-1278.avif';
 import r from '../Images/personal-growth.png'
-import berke from '../Images/dasda.png'
-function Home() {
+function AboutUs() {
     return (
         <>
             <section className="hero" id="hero">
@@ -89,4 +88,4 @@ function Home() {
 
 }
 
-export default Home;
+export default AboutUs;

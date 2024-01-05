@@ -9,6 +9,7 @@ import Login from './Pages/Login';
 import Footer from './Components/Footer';
 import User from './Pages/User';
 import Signup from './Pages/Signup';
+import Scanplant from './Pages/Scanplant';
 
 
 
@@ -22,7 +23,8 @@ function App() {
                 <Route path="/login" element={< Login />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/users"  element={<User/>}  />
-                <Route path='/signup' element={<Signup/>}/>
+                <Route path='/signup' element={<Signup />} />
+                <Route path='/scanplant' element={<Scanplant />} />
             </Routes>
             <Footer />
         </Router>

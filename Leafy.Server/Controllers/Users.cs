@@ -126,6 +126,7 @@ namespace Leafy.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [Authorize(Policy = "admin-user")]
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UpdateUserCommand command)

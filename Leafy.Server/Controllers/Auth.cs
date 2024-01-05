@@ -178,8 +178,12 @@ namespace Leafy.Server.Controllers
                 ValidateIssuer = false,
             };
 
-            handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedToken);
-            if (validatedToken == null)
+            var principal = handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedToken);
+            if (validatedToken != null)
+            {
+                Response.HttpContext.User = principal;
+            }
+            else
             {
                 return Ok(new
                 {

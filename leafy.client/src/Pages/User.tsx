@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
+async function logout() {
+    await axios.post(`api/Auth/logout`).then(response =>{
+        console.log(response);
+    }).catch(error => {
+        console.log(error);
+    });
+}
+
 interface User {
     id: number,
     name: string,
@@ -54,6 +63,7 @@ function User() {
         <div>
             <h1>Users</h1>
             {/*{content}*/}
+            <button onClick={logout}>osmann gültekin</button>
         </div>
     )
 }

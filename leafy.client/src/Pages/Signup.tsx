@@ -8,13 +8,15 @@ import {
   MDBInput,
 } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
+import grass from "../Images/grass.jpg";
+import axios from "axios";
 
 //variables
 
 var email = "";
 var password = "";
 var confirmPassword = "";
-var username = "";
+var name = "";
 
 
 
@@ -32,8 +34,8 @@ const getConfirmPassword = () => {
 };
 
 const getUsername = () => {
-  username = (document.getElementById("username") as HTMLInputElement).value;
-  console.log(username);
+  name = (document.getElementById("username") as HTMLInputElement).value;
+  console.log(name);
 };
 
 const getEmail = () => {
@@ -45,8 +47,10 @@ const emailRegex = (mail: string) => {
   return emailRegex.test(mail);
 };
 
-function controller() {
-  if (email == "" || password == "" || confirmPassword == "" || username == "") {
+
+
+async function controller () {
+  if (email == "" || password == "" || confirmPassword == "" || name == "") {
     alert('Lütfen bilgileri eksiksiz doldurduğunuzdan emin olunuz.')
   }
   else if(emailRegex(email) == false){
@@ -55,20 +59,28 @@ function controller() {
   else if(password.length < 6 || password.length > 14) {
     alert('Şifre 6 ila 14 karakterden oluşmalıdır.')
   }
-  else if(password != confirmPassword){
+  else if(password !== confirmPassword){
     alert('Lütfen şifrelerin aynı olduğundan emin olunur.')
   }
   else(
-    alert('başarılı') // eğer doğru ile fonksiyon çağırıcağız. 
-  )
-
+    await axios.post(`api/Auth/signup`, {
+      name,
+      email,
+      password
+    })
+    .then(response => {
+      console.log(response);
+      alert('Kayıt işlemi başarılı.')
+    })
+    .catch(error => {console.log(error)})
+    )
 
 }
 
 
 function Signup() {
   return (
-    <div>
+    <div className="signup">
       <MDBContainer fluid>
         <MDBRow className="d-flex justify-content-center align-items-center h-100">
           <MDBCol col="12">
@@ -132,7 +144,7 @@ function Signup() {
                   onClick={controller}
                   color="white"
                 >
-                  Sing Up
+                  Sign Up
                 </button>
               </MDBCardBody>
             </MDBCard>

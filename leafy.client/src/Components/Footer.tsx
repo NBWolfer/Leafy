@@ -1,5 +1,6 @@
 import '../assets/footer.css';
 import logo from '../Images/calendula.png';
+import { Link } from 'react-router-dom';
 
 
 function Footer() {
@@ -11,24 +12,18 @@ function Footer() {
           <div className="footer-links">
             <ul className="footer-menu">
               <li>
-                <a href="#">Home</a>
+                <Link to='/' >Home</Link>
               </li>
               <li>
-                <a className="footer-link" href="/About" style={{ color: "white" }}>About Us</a>
-              </li>
-              <li>
-                <a href="#">Services</a>
-              </li>
-              <li>
-                <a href="#">Contact</a>
+                <Link to="/about">About Us</Link>
               </li>
             </ul>
           </div>
+          </div>
         </div>
-        <div className="footer-bottom">
-          <p>&copy; 2023 Leafy. All rights reserved.</p>
-        </div>
-      </div>
+      <div className="footer-bottom">
+            <p>&copy; 2023 Leafy. All rights reserved.</p>
+          </div>
     </footer>
   );
 }

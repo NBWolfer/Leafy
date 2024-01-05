@@ -14,13 +14,14 @@ from 'mdb-react-ui-kit';
 function Login() {
   var email = '';
   var password = '';
+  
   const login = async () => {
     await axios.post(`api/Auth/loginJWTwithCookie`,  {
       email,
       password
     })
     .then(response => {
-      console.log(response);
+      
     }).catch(error => {
       console.log(error);
     });

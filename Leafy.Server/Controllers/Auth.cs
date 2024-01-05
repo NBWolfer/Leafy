@@ -191,6 +191,7 @@ namespace Leafy.Server.Controllers
                     info = ""
                 });
             }
+            // null gelme artık
             Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
             if(claim == null)
             {

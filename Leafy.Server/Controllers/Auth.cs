@@ -157,7 +157,56 @@ namespace Leafy.Server.Controllers
             return Ok("Çıkış yapıldı!");
         }
 
-        [Authorize(Policy = "adminOnly")]
+        [HttpPost("getStatus")]
+        public async Task<IActionResult> GetStatus()
+        {
+            var accessToken = Request.Cookies["accessToken"];
+            var refreshToken = Request.Cookies["refreshToken"];
+            if(refreshToken == null)
+            {
+                return Ok(new
+                {
+                    status = false,
+                    info = ""
+                });
+            }
+            
+            var handler = new JwtSecurityTokenHandler();
+            var validateParams = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration.GetValue<string>("secretKey") ?? "")),
+                ValidateLifetime = true,
+                ValidateAudience = false,
+                ValidateIssuer = false,
+            };
+
+            var principal = handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedToken);
+            if (principal == null)
+            {
+                return Ok(new
+                {
+                    status = false,
+                    info = "Geçerli kullanıcı değil!"
+                });
+            }
+            Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
+
+            if (claim.Value != "admin")
+                return Ok(new
+                {
+                    status = true,
+                    info = "user"
+                });
+            return Ok(new
+            {
+                status = true,
+                info = "admin"
+            });
+
+        }
+
+
         [HttpPost("test")]
         public async Task<IActionResult> Test()
         {

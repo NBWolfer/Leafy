@@ -103,6 +103,12 @@ namespace Leafy.Server.Controllers
         {
             try
             {
+                var userExisted = await _userRepository.GetUserByEmailAsync(command.Email);
+                if (userExisted != null)
+                {
+                    return Ok(new { message = "Bu email ile daha önce kayıt yapılmış!", status = 409});
+                }
+
                 await _mediator.Send(command);
 
                 var principal = await _authService.AuthenticateUserAsync(command.Email, command.Password);
@@ -110,7 +116,7 @@ namespace Leafy.Server.Controllers
 
                 if (principal == null)
                 {
-                    return Unauthorized("Wrong email or password!");
+                    return Ok(new { message = "Wrong email or password!", status = 401 });
                 }
 
                 var accessToken = _token.GenerateAccessToken(principal.Identity as ClaimsIdentity);
@@ -141,8 +147,8 @@ namespace Leafy.Server.Controllers
             {
                 return BadRequest(JsonSerializer.Serialize(new
                 {
-                    Title = "Hata!",
-                    ex.Message,
+                    message = "Hata!" + ex.Message,
+                    status = 500
                 }));
             }
         }

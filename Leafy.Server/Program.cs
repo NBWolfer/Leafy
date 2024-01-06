@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SendGrid.Helpers.Mail;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using SendGrid.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +24,14 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IPlantRepository, PlantRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IToken, Token>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddApplicationServices(builder.Configuration);
 
+builder.Services.AddSendGrid(options =>
+{
+    options.ApiKey = builder.Configuration.GetValue<string>("Email-Api-Key");
+});
 
 builder.Services.AddControllers();
 

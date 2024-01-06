@@ -1,6 +1,25 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+
+async function logout() {
+    await axios.post(`api/Auth/logout`).then(response =>{
+        console.log(response);
+    }).catch(error => {
+        console.log(error);
+    });
+}
+
+async function getStatus() {
+    await axios.post(`api/Auth/getStatus`).then(response => {
+        console.log(response);
+    }).catch(error => {
+        console.log(error);
+    });
+
+
+}
+
 interface User {
     id: number,
     name: string,
@@ -54,6 +73,7 @@ function User() {
         <div>
             <h1>Users</h1>
             {/*{content}*/}
+            <button onClick={getStatus}>osmann gültekin</button>
         </div>
     )
 }

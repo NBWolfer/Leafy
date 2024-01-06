@@ -1,6 +1,7 @@
 import '../assets/aboutus.css';
 import rs from '../Images/cute-happy-funny-monstera-plant-pot-vector-cartoon-character-illustration-design-isolated_92289-1278.avif';
 import r from '../Images/personal-growth.png'
+import berke from '../Images/dasda.png'
 function AboutUs() {
     return (
         <>
@@ -11,7 +12,7 @@ function AboutUs() {
                 <div className="container">
                     <div className="hero-content">
                         <h2>Web sitemize hos geldiniz</h2>
-                        {/*<p>Bitkilerinizin türünü ve saðlýðýný anlamak artýk daha kolay! Yapay zeka destekli web sitemiz, kullanýcýlarýn bitkilerinin yapraklarýndan fotoðraf alarak bitki türünü belirlemelerine yardýmcý oluyor. Ayrýca, bitkilerinizde olasý hastalýklarý tanýmlayarak detaylý bir analiz sunuyoruz. Kullanýcýlar, basit bir fotoðraf yükleyerek bitkilerinin ihtiyaçlarýný daha iyi anlayabilir ve olasý sorunlarý önceden tespit edebilirler. Bitkilerinizi saðlýklý ve mutlu tutmak için önerilerimizle doðru bakýmý saðlamak artýk çok daha basit. Yapay zeka algoritmalarýmýz, geniþ bitki veri tabanýmýzý kullanarak hýzlý ve doðru sonuçlar sunar. Bitkilerinizi sevgiyle büyütmek için bize katýlýn ve doðanýn güzelliklerini keþfedin!</p>*/}
+                        {/*<p>Bitkilerinizin tï¿½rï¿½nï¿½ ve saï¿½lï¿½ï¿½ï¿½nï¿½ anlamak artï¿½k daha kolay! Yapay zeka destekli web sitemiz, kullanï¿½cï¿½larï¿½n bitkilerinin yapraklarï¿½ndan fotoï¿½raf alarak bitki tï¿½rï¿½nï¿½ belirlemelerine yardï¿½mcï¿½ oluyor. Ayrï¿½ca, bitkilerinizde olasï¿½ hastalï¿½klarï¿½ tanï¿½mlayarak detaylï¿½ bir analiz sunuyoruz. Kullanï¿½cï¿½lar, basit bir fotoï¿½raf yï¿½kleyerek bitkilerinin ihtiyaï¿½larï¿½nï¿½ daha iyi anlayabilir ve olasï¿½ sorunlarï¿½ ï¿½nceden tespit edebilirler. Bitkilerinizi saï¿½lï¿½klï¿½ ve mutlu tutmak iï¿½in ï¿½nerilerimizle doï¿½ru bakï¿½mï¿½ saï¿½lamak artï¿½k ï¿½ok daha basit. Yapay zeka algoritmalarï¿½mï¿½z, geniï¿½ bitki veri tabanï¿½mï¿½zï¿½ kullanarak hï¿½zlï¿½ ve doï¿½ru sonuï¿½lar sunar. Bitkilerinizi sevgiyle bï¿½yï¿½tmek iï¿½in bize katï¿½lï¿½n ve doï¿½anï¿½n gï¿½zelliklerini keï¿½fedin!</p>*/}
                         <p>Understanding the type and health of your plants is now easier! Our artificial intelligence-powered website helps users identify plant species by taking photos of their plants' leaves. We also provide a detailed analysis, identifying possible diseases in your plants. By uploading a simple photo, users can better understand their plant's needs and detect potential problems in advance. Providing proper care is now much simpler with our recommendations to keep your plants healthy and happy. Our artificial intelligence algorithms deliver fast and accurate results using our extensive plant database. Join us to grow your plants with love and discover the beauties of nature!</p>
                         <button className="cta-button">Hemen Basla</button>
                     </div>
@@ -51,7 +52,7 @@ function AboutUs() {
                         </div>
                     </div>
                     <div className="teams">
-                        <img src={r} alt=""></img>
+                        <img src={berke} alt=""></img>
                         <div className="name">Berke Erkan Dogan</div>
                         <div className="desig">Developer</div>
                         <div className="about">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare congue nulla in cursus. In ut elit in nulla gravida efficitur et eget diam. Fusce et tortor dapibus, iaculis nibh eu, lobortis sem. Fusce tincidunt mauris in tellus volutpat egestas.</div>

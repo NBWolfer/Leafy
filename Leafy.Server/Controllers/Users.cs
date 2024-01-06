@@ -47,7 +47,7 @@ namespace Leafy.Server.Controllers
                     var refreshToken = Request.Cookies["refreshToken"];
                     if(refreshToken == null)
                     {
-                        return Ok("Bu istek için yetkili değilsiniz!");
+                        return Ok(new { message = "Tekrar giriş yapın!", status= 401 });
                     }
                     var principalRefreshToken = handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedRefreshToken);
                     if (validatedRefreshToken == null)
@@ -74,7 +74,10 @@ namespace Leafy.Server.Controllers
                     Response.HttpContext.User = principal;
                 }
                 Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
-
+                if(claim == null)
+                {
+                    return Ok("Bu istek için yetkili değilsiniz!");
+                }
                 if (claim.Value != "admin")
                     return Ok("Bu istek için yetkili değilsiniz!");
                 var users = await _mediator.Send(new GetUserQuery());
@@ -94,9 +97,8 @@ namespace Leafy.Server.Controllers
                     Message = ex.ToString()
                 }));
             }
-    }
-
-        [Authorize(Policy = "admin-user")]
+        }
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -112,46 +114,194 @@ namespace Leafy.Server.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserCommand command)
         {
             try {
+                var handler = new JwtSecurityTokenHandler();
+
+                var validateParams = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration.GetValue<string>("secretKey") ?? "")),
+                    ValidateLifetime = true,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                };
+                var accessToken = Request.Cookies["accessToken"];
+                if (accessToken == null)
+                {
+                    var refreshToken = Request.Cookies["refreshToken"];
+                    if (refreshToken == null)
+                    {
+                        return Ok(new { message = "Tekrar giriş yapın!", status = 401 });
+                    }
+                    var principalRefreshToken = handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedRefreshToken);
+                    if (validatedRefreshToken == null)
+                    {
+                        return Ok(new { message = "Geçersiz token!", status = 403});
+                    }
+                    else
+                    {
+                        accessToken = _token.GenerateAccessToken(principalRefreshToken.Identity as ClaimsIdentity);
+                        Response.Cookies.Append("accessToken", accessToken, new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true,
+                            SameSite = SameSiteMode.None,
+                            Expires = DateTime.UtcNow.AddMinutes(10)
+                        });
+                        Response.HttpContext.User = principalRefreshToken;
+                    }
+                }
+
+                var principal = handler.ValidateToken(accessToken, validateParams, out SecurityToken validatedToken);
+                if (validatedToken != null)
+                {
+                    Response.HttpContext.User = principal;
+                }
+                Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
+                if (claim == null)
+                {
+                    return Ok("Bu istek için yetkili değilsiniz!");
+                }
+                if (claim.Value != "admin")
+                    return Ok("Bu istek için yetkili değilsiniz!");
+
                 await _mediator.Send(command);
                 return Ok("User created!");
 
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Hata !"+ex.Message);
             }
         }
 
-        [Authorize(Policy = "admin-user")]
+
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UpdateUserCommand command)
         {
             try {
+                var handler = new JwtSecurityTokenHandler();
+
+                var validateParams = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration.GetValue<string>("secretKey") ?? "")),
+                    ValidateLifetime = true,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                };
+                var accessToken = Request.Cookies["accessToken"];
+                if (accessToken == null)
+                {
+                    var refreshToken = Request.Cookies["refreshToken"];
+                    if (refreshToken == null)
+                    {
+                        return Ok(new { message = "Tekrar giriş yapın!", status = 401 });
+                    }
+                    var principalRefreshToken = handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedRefreshToken);
+                    if (validatedRefreshToken == null)
+                    {
+                        return Ok("Tekrardan giriş yapın!");
+                    }
+                    else
+                    {
+                        accessToken = _token.GenerateAccessToken(principalRefreshToken.Identity as ClaimsIdentity);
+                        Response.Cookies.Append("accessToken", accessToken, new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true,
+                            SameSite = SameSiteMode.None,
+                            Expires = DateTime.UtcNow.AddMinutes(10)
+                        });
+                        Response.HttpContext.User = principalRefreshToken;
+                    }
+                }
+
+                var principal = handler.ValidateToken(accessToken, validateParams, out SecurityToken validatedToken);
+                if (validatedToken != null)
+                {
+                    Response.HttpContext.User = principal;
+                }
+                Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
+                if (claim == null)
+                {
+                    return Ok("Bu istek için yetkili değilsiniz!");
+                }
+                if (claim.Value != "admin")
+                    return Ok("Bu istek için yetkili değilsiniz!");
+
                 await _mediator.Send(command);
                 return Ok("User updated!");
             }
             catch (Exception ex)
             {
-                return Unauthorized("User is not authorized!");
+                return Ok(new {message = "Hata !" + ex.Message});
             }
         }
 
-        [Authorize(Policy = "admin-user")]
         [HttpDelete]
         public async Task<IActionResult> RemoveUser(int id)
         {
-            try { 
+            try {
+                var handler = new JwtSecurityTokenHandler();
+
+                var validateParams = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration.GetValue<string>("secretKey") ?? "")),
+                    ValidateLifetime = true,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                };
+                var accessToken = Request.Cookies["accessToken"];
+                if (accessToken == null)
+                {
+                    var refreshToken = Request.Cookies["refreshToken"];
+                    if (refreshToken == null)
+                    {
+                        return Ok(new { message = "Tekrar giriş yapın!", status = 401 });
+                    }
+                    var principalRefreshToken = handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedRefreshToken);
+                    if (validatedRefreshToken == null)
+                    {
+                        return Ok("Tekrardan giriş yapın!");
+                    }
+                    else
+                    {
+                        accessToken = _token.GenerateAccessToken(principalRefreshToken.Identity as ClaimsIdentity);
+                        Response.Cookies.Append("accessToken", accessToken, new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true,
+                            SameSite = SameSiteMode.None,
+                            Expires = DateTime.UtcNow.AddMinutes(10)
+                        });
+                        Response.HttpContext.User = principalRefreshToken;
+                    }
+                }
+
+                var principal = handler.ValidateToken(accessToken, validateParams, out SecurityToken validatedToken);
+                if (validatedToken != null)
+                {
+                    Response.HttpContext.User = principal;
+                }
+                Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
+                if (claim == null)
+                {
+                    return Ok("Bu istek için yetkili değilsiniz!");
+                }
+                if (claim.Value != "admin")
+                    return Ok("Bu istek için yetkili değilsiniz!");
+
                 await _mediator.Send(new RemoveUserCommand(id));
                 return Ok("User removed!");
             } 
             catch (Exception ex)
             {
-                return Unauthorized("User is not authorized!");
+                return BadRequest(new { message = "Hata !" + ex.Message} );
             }
         }
     }

@@ -14,9 +14,8 @@ import Plants from './Pages/Plants';
 
 
 
-
-
 function App() {
+    
     return <div>
         <Router>
             <Nav />

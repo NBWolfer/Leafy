@@ -19,7 +19,6 @@ namespace Leafy.Server.Controllers
     [ApiController]
     public class Auth : ControllerBase
     {
-        private readonly IAuthRepository _repository;
         private readonly IMediator _mediator;
         private readonly IAuthService _authService;
         private readonly IToken _token;
@@ -29,7 +28,6 @@ namespace Leafy.Server.Controllers
         public Auth(IAuthRepository authRepository, IMediator mediator, IAuthService authService, IToken token, IUserRepository userRepository, IConfiguration configuration)
         {
             _configuration = configuration;
-            _repository = authRepository;
             _mediator = mediator;
             _authService = authService;
             _token = token;
@@ -105,6 +103,12 @@ namespace Leafy.Server.Controllers
         {
             try
             {
+                var userExisted = await _userRepository.GetUserByEmailAsync(command.Email);
+                if (userExisted != null)
+                {
+                    return Ok(new { message = "Bu email ile daha önce kayıt yapılmış!", status = 409});
+                }
+
                 await _mediator.Send(command);
 
                 var principal = await _authService.AuthenticateUserAsync(command.Email, command.Password);
@@ -112,7 +116,7 @@ namespace Leafy.Server.Controllers
 
                 if (principal == null)
                 {
-                    return Unauthorized("Wrong email or password!");
+                    return Ok(new { message = "Wrong email or password!", status = 401 });
                 }
 
                 var accessToken = _token.GenerateAccessToken(principal.Identity as ClaimsIdentity);
@@ -143,8 +147,8 @@ namespace Leafy.Server.Controllers
             {
                 return BadRequest(JsonSerializer.Serialize(new
                 {
-                    Title = "Hata!",
-                    ex.Message,
+                    message = "Hata!" + ex.Message,
+                    status = 500
                 }));
             }
         }
@@ -157,7 +161,67 @@ namespace Leafy.Server.Controllers
             return Ok("Çıkış yapıldı!");
         }
 
-        [Authorize(Policy = "adminOnly")]
+        [HttpPost("getStatus")]
+        public async Task<IActionResult> GetStatus()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            if(refreshToken == null)
+            {
+                return Ok(new
+                {
+                    status = false,
+                    info = ""
+                });
+            }
+            
+            var handler = new JwtSecurityTokenHandler();
+            var validateParams = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration.GetValue<string>("secretKey") ?? "")),
+                ValidateLifetime = true,
+                ValidateAudience = false,
+                ValidateIssuer = false,
+            };
+
+            var principal = handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedToken);
+            if (validatedToken != null)
+            {
+                Response.HttpContext.User = principal;
+            }
+            else
+            {
+                return Ok(new
+                {
+                    status = false,
+                    info = ""
+                });
+            }
+            // null gelme artık
+            Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
+            if(claim == null)
+            {
+                   return Ok(new
+                   {
+                    status = false,
+                    info = ""
+                });
+            }
+            if (claim.Value != "admin")
+                return Ok(new
+                {
+                    status = true,
+                    info = "user"
+                });
+            return Ok(new
+            {
+                status = true,
+                info = "admin"
+            });
+
+        }
+
+
         [HttpPost("test")]
         public async Task<IActionResult> Test()
         {

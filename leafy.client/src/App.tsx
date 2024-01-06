@@ -10,7 +10,7 @@ import Footer from './Components/Footer';
 import User from './Pages/User';
 import Signup from './Pages/Signup';
 import Scanplant from './Pages/Scanplant';
-import Plants from './Pages/Plants';
+import Plantss from './Pages/Plantss';
 
 
 
@@ -26,7 +26,7 @@ function App() {
                 <Route path="/users"  element={<User/>}  />
                 <Route path='/signup' element={<Signup />} />
                 <Route path='/scanplant' element={<Scanplant />} />
-                <Route path='/plants' element={<Plants />} />
+                <Route path='/Plantss' element={<Plantss /> }/>
             </Routes>
             <Footer />
         </Router>

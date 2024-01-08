@@ -2,11 +2,7 @@
 using Leafy.Domain.Entities;
 using Leafy.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Leafy.Persistance.Repositories
 {
@@ -23,6 +19,20 @@ namespace Leafy.Persistance.Repositories
         {
             var plants = _leafyContext.Plants.Include(x => x.Disease).ToList();
             return plants;
+        }
+
+        public string ScanPlantDisase(string base64Image)
+        {
+            
+
+            // Base64 string'i byte dizisine çevir
+            byte[] imageBytes = Convert.FromBase64String(base64Image);
+            try
+            {
+                
+            }
+            catch (Exception ex) { return ex.Message; }
+            return "";
         }
     }
 }

@@ -10,5 +10,6 @@ namespace Leafy.Application.Interfaces
     public interface IPlantRepository
     {
         public Task<List<Plant>> GetPlantWithDisease(); 
+        public string ScanPlantDisase(string Image);
     }
 }

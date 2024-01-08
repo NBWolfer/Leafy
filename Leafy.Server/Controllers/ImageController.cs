@@ -1,4 +1,5 @@
 ﻿using Leafy.Application.DTOs;
+using Leafy.Application.Interfaces;
 using Leafy.Persistance.Context;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,33 +10,19 @@ namespace Leafy.Server.Controllers
     public class ImageController : ControllerBase
     {
         private readonly LeafyContext _context;
+        private readonly IPlantRepository _plantRepository;
 
-        public ImageController(LeafyContext context)
+        public ImageController(LeafyContext context, IPlantRepository plantRepository)
         {
+            _plantRepository = plantRepository;
             _context = context;
         }
 
         [HttpPost]
-        public IActionResult UploadImage([FromBody] AddPlantModel file)
+        public async Task<IActionResult> UploadImage([FromBody] AddPlantModel file)
         {
-            if (file == null || file.Image == null || file.Image.Length == 0)
-                return BadRequest("Invalid file");
-
-            string imageData = file.Image;
-
-            // Eğitilmiş modeli çağır ve sonuçları al
-            var aiModelResults = InvokeAIModel(imageData);
-
-            // AI model sonuçlarını istemciye döndür
-            return Ok(new { results = aiModelResults });
-        }
-
-        private object InvokeAIModel(string imageData)
-        {
-            // AI modeli çağırma işlemleri burada gerçekleştirilir
-            // ...
-            // Örnek: Sadece resim verisinin uzunluğunu döndürüyoruz
-            return imageData.Length;
+            string result = await _plantRepository.ScanPlantDisase(file.Image);
+            return Ok(result);
         }
     }
 }

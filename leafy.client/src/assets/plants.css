@@ -13,12 +13,11 @@
 }*/
 
 .containerr {
-    max-width: 1200px;
-    width: 95%;
-    /*display: flex;*/
-    /*align-items: center;*/
+    padding: 35px;
+    width: 85%;
     justify-content: center;
-    margin-left:150px;
+    align-items:center;
+    margin-left: 7.5%;
 }
 
 .slider-wrapper {

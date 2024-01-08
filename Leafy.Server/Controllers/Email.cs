@@ -19,7 +19,7 @@ namespace Leafy.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> SendPassResetMail([FromBody] EmailModel email)
         {
-            await _emailService.SendEmailAsync(email.Email, email.Subject, email.HtmlMessage);
+            await _emailService.SendEmailAsync(email.Email, email.Subject, email.Message);
             return Ok();
         }
     }

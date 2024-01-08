@@ -6,10 +6,12 @@ import rs5 from '../Images/icons8-close-100.png'
 import rs6 from '../Images/personal-growth.png'
 /*import "https://fonts.googleapis.com/css2?family=Materiaal+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"*/
 import '../assets/plants.css'
-/*import '../assets/plantss.js'*/
+import '../assets/plantss.js'
+
 
 
 function Plants() {
+    
     return (
         <>
             <div className="containerr">

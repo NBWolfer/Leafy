@@ -24,14 +24,16 @@ namespace Leafy.Server.Controllers
         private readonly IToken _token;
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
-        public Auth(IAuthRepository authRepository, IMediator mediator, IAuthService authService, IToken token, IUserRepository userRepository, IConfiguration configuration)
+        public Auth(IAuthRepository authRepository, IMediator mediator, IAuthService authService, IToken token, IUserRepository userRepository, IConfiguration configuration, IEmailService emailService)
         {
             _configuration = configuration;
             _mediator = mediator;
             _authService = authService;
             _token = token;
             _userRepository = userRepository;
+            _emailService = emailService;
         }
 
         [HttpPost("loginJWT")]
@@ -139,6 +141,8 @@ namespace Leafy.Server.Controllers
                 });
 
                 Response.HttpContext.User = principal;
+
+                await _emailService.SendEmailAsync(user.Email, "Hoşgeldiniz!", "Leafy'ye kaydolduğunuz için teşekkürler!");
 
                 return Ok(new { user.Name, user.Email, user.Id, user.RegisteredDate });
 

@@ -1,11 +1,11 @@
 
 
 
-function ErrorPage(message: string, code: string) {
+function ErrorPage() {
     return (
         <div>
-            <h1>{message}</h1>
-            <h2>{code}</h2>
+            <h1>message</h1>
+            
         </div>
     )
 

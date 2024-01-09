@@ -1,114 +1,49 @@
-import React from "react";
-//import ImageUploading, { ImageListType } from "react-images-uploading";
+import React, { useState, useEffect } from "react";
 import ImageUpload from "../Components/ImageUpload.tsx";
+import axios from "axios";
 
-export function Scanplant() {
-    //const [images, setImages] = React.useState([]);
-    //const maxNumber = 69;
+interface Plant {
+    image: string;
+}
 
-    //const onChange = (
-    //    imageList: ImageListType,
-    //    addUpdateIndex: number[] | undefined
-    //) => {
-    //    // data for submit
-    //    console.log(imageList, addUpdateIndex);
-    //    setImages(imageList as never[]);
-    //};
+interface Result {
+    output: string;
+}
 
-    return ( 
+function Scanplant() {
+    const [plant, setPlant] = useState<Plant>({ image: "" });
+    const [result, setResult] = useState<Result>({ output: "" });
+
+    const handleBase64DataChange = (base64Data: string | null) => {
+        setPlant({ image: base64Data || "" });
+    };
+
+    const postPlant = async () => {
+        try {
+            const imageString = plant.image;
+            await axios.post("/api/Image", { image: imageString }).then((res) => {
+                var result = res.data.substring(res.data.indexOf("Resim"));
+                setResult({ output: result });
+
+                console.log(result);
+            });
+        } catch (error) {
+            console.error("Error posting plant:", error);
+        }
+    };
+
+    useEffect(() => {
+        postPlant();
+    }, [plant]);
+
+    return (
         <div className="ScanPlants">
-        <ImageUpload/>
-            {/*<ImageUploading*/}
-            {/*    multiple*/}
-            {/*    value={images}*/}
-            {/*    onChange={onChange}*/}
-            {/*    maxNumber={maxNumber}*/}
-            {/*>*/}
-            {/*    {({*/}
-            {/*        imageList,*/}
-            {/*        onImageUpload,*/}
-            {/*        onImageRemoveAll,*/}
-            {/*        onImageUpdate,*/}
-            {/*        onImageRemove,*/}
-            {/*        isDragging,*/}
-            {/*        dragProps*/}
-            {/*    }) => (*/}
-            {/*        // write your building UI*/}
-            {/*        <div className="upload__image-wrapper">*/}
-            {/*            <button*/}
-            {/*                style={isDragging ? { color: "red" } : undefined}*/}
-            {/*                onClick={onImageUpload}*/}
-            {/*                {...dragProps}*/}
-            {/*            >*/}
-            {/*                Click or Drop here*/}
-            {/*            </button>*/}
-            {/*            &nbsp;*/}
-            {/*            <button onClick={onImageRemoveAll}>Remove all images</button>*/}
-            {/*            {imageList.map((image, index) => (*/}
-            {/*                <div key={index} className="image-item">*/}
-            {/*                    <img src={image.dataURL} alt="" width="100" />*/}
-            {/*                    <div className="image-item__btn-wrapper">*/}
-            {/*                        <button onClick={() => onImageUpdate(index)}>Update</button>*/}
-            {/*                        <button onClick={() => onImageRemove(index)}>Remove</button>*/}
-            {/*                    </div>*/}
-            {/*                </div>*/}
-            {/*            ))}*/}
-            {/*        </div>*/}
-            {/*    )}*/}
-            {/*</ImageUploading>*/}
+            {/* Pass the callback function to ImageUpload */}
+            <h2>Result:{result.output}</h2>
+            
+            <ImageUpload onBase64DataChange={handleBase64DataChange} />
         </div>
     );
 }
+
 export default Scanplant;
-
-
-//import axios from 'axios'
-//import { useState } from 'react'
-
-
-
-//function Scanplant() {
-//    const [image, setImage] = useState('')
-//    function handleImage(e) {
-//        console.log(e.target.files)
-//        setImage(e.target.files[0])
-
-//    }
-
-//    function handleApi() {
-//        const formData = new FormData()
-//        formData.append('image', image)
-//        axios.post('url', formData).then((res) => {
-//            console.log(res)
-//        })
-
-//    }
-//    return (
-//        <>
-//            <div>
-//                <input type="file" name="file" onChange={handleImage} />
-//                <button onClick={handleApi}>Submit</button>
-//            </div>
-//        </>
-
-//    )
-//}
-//export default Scanplant;
-
-/*---base64çevirme*/
-//const imageList = [
-//    { dataURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...' },
-//    // Diðer resim nesneleri
-//];
-
-//const base64StringArray = imageList.map((image) => {
-//    // 'data:image/png;base64,' kýsmýný kaldýrarak sadece base64 veriyi alýn
-//    const base64Data = image.dataURL.split(',')[1];
-
-//    // base64 veriyi stringe çevirin
-//    const binaryData = atob(base64Data);
-
-//    return binaryData;
-//});
-
-//console.log(base64StringArray);

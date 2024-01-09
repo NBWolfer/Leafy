@@ -21,7 +21,10 @@ namespace Leafy.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadImage([FromBody] AddPlantModel file)
         {
-
+            if(file.Image == null || file.Image == "")
+            {
+                return Ok("Image is null");
+            }
             string result = await _plantRepository.ScanPlantDisase(file.Image);
             return Ok(result);
         }

@@ -1,11 +1,15 @@
 import React, { ChangeEvent } from "react";
 
+interface ImageUploadProps {
+    onBase64DataChange: (base64Data: string | null) => void;
+}
+
 interface ImageUploadState {
     base64Data: string | null;
 }
 
-class ImageUpload extends React.Component<{}, ImageUploadState> {
-    constructor(props: {}) {
+class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
+    constructor(props: ImageUploadProps) {
         super(props);
         this.state = {
             base64Data: null
@@ -30,12 +34,13 @@ class ImageUpload extends React.Component<{}, ImageUploadState> {
         this.setState({
             base64Data: btoa(binaryString)
         });
+
+        // Call the callback function with the base64Data
+        this.props.onBase64DataChange(btoa(binaryString));
     };
 
     render() {
         const { base64Data } = this.state;
-        console.log("base64", this.state);
-        console.log(base64Data);
         return (
             <div>
                 <input

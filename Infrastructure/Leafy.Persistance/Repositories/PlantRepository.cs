@@ -2,8 +2,9 @@
 using Leafy.Domain.Entities;
 using Leafy.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-
+using CliWrap;
+using CliWrap.Buffered;
+using System.Text;
 
 namespace Leafy.Persistance.Repositories
 {
@@ -34,24 +35,10 @@ namespace Leafy.Persistance.Repositories
                 string path = dirPath + "image" + string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", DateTime.Now) + ".jpg";
                 await File.WriteAllBytesAsync(path, imageBytes);
 
-                using (Process process = new Process())
-                {
-                    process.StartInfo.FileName = "python";
-                    process.StartInfo.Arguments = $"{modelPath} \"{path}\"";
-                    process.StartInfo.UseShellExecute = false;
-                    process.StartInfo.RedirectStandardOutput = true;
+                var result = await Cli.Wrap("python").WithArguments(new[] {modelPath, path}).ExecuteBufferedAsync(Encoding.UTF8);
 
-                    // Start the process asynchronously
-                    process.Start();
-
-                    // Read the standard output asynchronously
-                    string output = await process.StandardOutput.ReadToEndAsync();
-
-                    // Wait for the process to exit
-                    await process.WaitForExitAsync();
-
-                    return output;
-                }
+                string output = result.StandardOutput;
+                return output;
             }
             catch (Exception ex) { return ex.Message; }
         }

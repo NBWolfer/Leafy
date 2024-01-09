@@ -13,6 +13,7 @@ import Scanplant from './Pages/Scanplant';
 //import Plantss from './Pages/Plantss';
 import { lazy } from 'react';
 
+
 const Plantss = lazy(() => import('./Pages/Plantss'));
 
 

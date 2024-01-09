@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+
 import axios from 'axios';
+
 
 
 async function logout() {
@@ -74,6 +75,7 @@ function User() {
             <h1>Users</h1>
             {/*{content}*/}
             <button onClick={getStatus}>osmann gültekin</button>
+            <button onClick={logout}>gültekin osman</button>
         </div>
     )
 }

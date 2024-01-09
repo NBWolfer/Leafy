@@ -169,15 +169,16 @@ namespace Leafy.Server.Controllers
         public async Task<IActionResult> GetStatus()
         {
             var refreshToken = Request.Cookies["refreshToken"];
-            if(refreshToken == null)
+            if (refreshToken == null)
             {
                 return Ok(new
                 {
                     status = false,
-                    info = ""
+                    info = "",
+                    user = ""
                 });
             }
-            
+
             var handler = new JwtSecurityTokenHandler();
             var validateParams = new TokenValidationParameters
             {
@@ -198,29 +199,35 @@ namespace Leafy.Server.Controllers
                 return Ok(new
                 {
                     status = false,
-                    info = ""
+                    info = "",
+                    user = ""
                 });
             }
             // null gelme artık
-            Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
+            string claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role).Value??"";
+            string claimEmail = Response.HttpContext.User.FindFirst(ClaimTypes.Email).Value??"";
+            User userCurrent = await _userRepository.GetUserByEmailAsync(claimEmail);
             if(claim == null)
             {
                    return Ok(new
                    {
                     status = false,
-                    info = ""
+                    info = "",
+                    user = ""
                 });
             }
-            if (claim.Value != "admin")
+            if (claim != "admin")
                 return Ok(new
                 {
                     status = true,
-                    info = "user"
+                    info = "user",
+                    user = userCurrent.Name
                 });
             return Ok(new
             {
                 status = true,
-                info = "admin"
+                info = "admin",
+                user = userCurrent.Name
             });
 
         }

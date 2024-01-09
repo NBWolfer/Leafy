@@ -1,4 +1,4 @@
-﻿using Leafy.Application.Features.Commands;
+﻿using Leafy.Application.Features.Commands.UserPlantCommands;
 using Leafy.Application.Interfaces;
 using MediatR;
 using System;

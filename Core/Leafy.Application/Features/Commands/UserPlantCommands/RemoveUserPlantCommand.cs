@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Leafy.Application.Features.Commands
+namespace Leafy.Application.Features.Commands.UserPlantCommands
 {
     public class RemoveUserPlantCommand : IRequest
     {

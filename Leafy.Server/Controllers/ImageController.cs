@@ -21,6 +21,7 @@ namespace Leafy.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadImage([FromBody] AddPlantModel file)
         {
+
             string result = await _plantRepository.ScanPlantDisase(file.Image);
             return Ok(result);
         }

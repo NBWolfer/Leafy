@@ -10,7 +10,10 @@ import Footer from './Components/Footer';
 import User from './Pages/User';
 import Signup from './Pages/Signup';
 import Scanplant from './Pages/Scanplant';
-import Plantss from './Pages/Plantss';
+//import Plantss from './Pages/Plantss';
+import { lazy } from 'react';
+
+const Plantss = lazy(() => import('./Pages/Plantss'));
 
 
 
@@ -26,7 +29,7 @@ function App() {
                 <Route path="/users"  element={<User/>}  />
                 <Route path='/signup' element={<Signup />} />
                 <Route path='/scanplant' element={<Scanplant />} />
-                <Route path='/Plantss' element={<Plantss /> } />
+                <Route path='/Plantss' element={<Plantss />} />
             </Routes>
             <Footer />
         </Router>

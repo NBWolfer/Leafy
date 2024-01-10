@@ -17,6 +17,12 @@ namespace Leafy.Persistance.Repositories
             _leafyContext = leafyContext;
         }
 
+        public Task<Plant> GetPlantByName(string name)
+        {
+            var plant = _leafyContext.Plants.FirstOrDefaultAsync(x => x.Name == name);
+            return plant;
+        }
+
         public async Task<List<Plant>> GetPlantWithDisease()
         {
             var plants = _leafyContext.Plants.Include(x => x.Disease).ToList();

@@ -7,20 +7,20 @@ import rs6 from '../Images/personal-growth.png'
 /*import "https://fonts.googleapis.com/css2?family=Materiaal+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"*/
 import '../assets/plants.css'
 //import '../assets/plantss.js'
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 
-interface PlantsProps {
-    name: string,
-    img: string,
-}
+//interface PlantsProps {
+//    name: string,
+//    img: string,
+//}
 
 function Plants() {
 
-    const [plants, setPlants] = useState<PlantsProps[]>([]);
+    //const [plants, setPlants] = useState<PlantsProps[]>([]);
 
-    useEffect(() => {
+    //useEffect(() => {
         
-    });
+    //});
 
     useEffect(() => {
         const initSlider = async () => {

@@ -9,11 +9,11 @@ namespace Leafy.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserPlant : ControllerBase
+    public class UserPlants : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public UserPlant(IMediator mediator)
+        public UserPlants(IMediator mediator)
         {
             _mediator = mediator;
         }

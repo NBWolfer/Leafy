@@ -7,11 +7,11 @@ const RequireAuth = () => {
     const { status, name, info} = Auth.AuthContext();
     const location = useLocation();
     
-        return(
-            status? 
-            <Navigate to="/login" />  /> 
-            : <Navigate to={location.pathname}
-        )
+    return (
+        status ?
+            <Navigate to="/login" />
+            : <Navigate to={location.pathname}/>
+        );
 
 
 }

@@ -9,18 +9,18 @@ import '../assets/plants.css'
 //import '../assets/plantss.js'
 import { useEffect, useState } from 'react';
 
-interface PlantsProps {
-    name: string,
-    img: string,
-}
+//interface PlantsProps {
+//    name: string,
+//    img: string,
+//}
 
 function Plants() {
 
-    const [plants, setPlants] = useState<PlantsProps[]>([]);
+    // const [plants, setPlants] = useState<PlantsProps[]>([]);
 
-    useEffect(() => {
+    // useEffect(() => {
         
-    });
+    // });
 
     useEffect(() => {
         const initSlider = async () => {

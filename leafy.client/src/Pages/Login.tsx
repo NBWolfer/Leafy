@@ -21,7 +21,7 @@ function Login() {
       password
     })
     .then(response => {
-      
+      window.location.href = '/user';
     }).catch(error => {
       console.log(error);
     });

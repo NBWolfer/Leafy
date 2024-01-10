@@ -364,5 +364,5 @@ FodyWeavers.xsd
 
 # Model files
 /Model
-/Images
+/ImagesModel
 /FrontendImages

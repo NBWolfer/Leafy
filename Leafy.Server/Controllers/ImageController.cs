@@ -61,7 +61,7 @@ namespace Leafy.Server.Controllers
                 var principalRefreshToken = handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedRefreshToken);
                 if (validatedRefreshToken == null)
                 {
-                    return Ok("Tekrardan giriş yapın!");
+                    return Ok(new { message = "Tekrardan giriş yapın!", status = 401 });
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace Leafy.Server.Controllers
             Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
             if (claim == null)
             {
-                return Ok("Bu istek için yetkili değilsiniz!");
+                return Ok(new { message = "Bu istek için yetkili değilsiniz!", status = 403 });
             }
 
             var userEmail = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
@@ -94,7 +94,7 @@ namespace Leafy.Server.Controllers
 
             if (file.Image == null || file.Image == "")
             {
-                return Ok("Image is null");
+                return Ok(new { message = "Image is null", status = 400 });
             }
             string result = await _plantRepository.ScanPlantDisase(file.Image);
 
@@ -144,7 +144,7 @@ namespace Leafy.Server.Controllers
                 UserId = user.Id,
             });
 
-            return Ok(result);
+            return Ok(plantName);
         }
     }
 }

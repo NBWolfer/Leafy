@@ -59,12 +59,19 @@ namespace Leafy.Server.Controllers
         {
             try
             {
+                var accessTokenStill = Request.Cookies["accessToken"];
+                var refreshTokenStill = Request.Cookies["refreshToken"];
+                if(accessTokenStill != null || refreshTokenStill != null)
+                {
+                    return Ok(new { message = "Zaten giriş yapılmış!", status = 302 });
+                }
+
                 var principal = await _authService.AuthenticateUserAsync(login.Email, login.Password);
                 var user = await _userRepository.GetUserByEmailAsync(login.Email);
 
                 if (principal == null)
                 {
-                    return Unauthorized("Wrong email or password!");
+                    return Ok(new { message = "Wrong email or password!" , status = 401});
                 }
 
                 var accessToken = _token.GenerateAccessToken(principal.Identity as ClaimsIdentity);

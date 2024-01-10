@@ -52,7 +52,7 @@ namespace Leafy.Server.Controllers
                     var principalRefreshToken = handler.ValidateToken(refreshToken, validateParams, out SecurityToken validatedRefreshToken);
                     if (validatedRefreshToken == null)
                     {
-                        return Ok("Tekrardan giriş yapın!");
+                        return Ok(new { messsage = "Tekrardan giriş yapın!", status = 403});
                     }
                     else
                     {
@@ -76,10 +76,10 @@ namespace Leafy.Server.Controllers
                 Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
                 if(claim == null)
                 {
-                    return Ok("Bu istek için yetkili değilsiniz!");
+                    return Ok(new { message = "Tekrardan giriş yapın!", status = 401 } );
                 }
                 if (claim.Value != "admin")
-                    return Ok("Bu istek için yetkili değilsiniz!");
+                    return Ok(new { message = "Bu istek için yetkili değilsiniz!", status = 403 });
                 var users = await _mediator.Send(new GetUserQuery());
                 if (users is null)
                     return NotFound(JsonSerializer.Serialize(new
@@ -105,7 +105,7 @@ namespace Leafy.Server.Controllers
             try { 
                 var user = await _mediator.Send(new GetUserByIdQuery(id));
                 if (user is null)
-                    return NotFound("Kullanıcı bulunamadı!");
+                    return Ok(new { message = "Kullanıcı bulunamadı!", status = 404 });
                 return Ok(user);
             }
             catch (Exception ex)
@@ -163,13 +163,13 @@ namespace Leafy.Server.Controllers
                 Claim claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role);
                 if (claim == null)
                 {
-                    return Ok("Bu istek için yetkili değilsiniz!");
+                    return Ok(new { message = "Tekrar giriş yapın!", status = 401 });
                 }
                 if (claim.Value != "admin")
-                    return Ok("Bu istek için yetkili değilsiniz!");
+                    return Ok(new { message = "Bu istek için yetkili değilsiniz!", status = 403 });
 
                 await _mediator.Send(command);
-                return Ok("User created!");
+                return Ok(new { message = "User created!", status = 200 });
 
             }
             catch (Exception ex)

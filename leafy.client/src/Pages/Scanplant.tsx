@@ -22,7 +22,11 @@ function Scanplant() {
         try {
             const imageString = plant.image;
             await axios.post("/api/Image", { image: imageString }).then((res) => {
-                var result = res.data.substring(res.data.indexOf("Resim"));
+                if (res.data.message) {
+                    console.log(res.data);
+                    return
+                }
+                var result = res.data;
                 setResult({ output: result });
 
                 console.log(result);

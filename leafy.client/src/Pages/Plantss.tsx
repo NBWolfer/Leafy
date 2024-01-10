@@ -7,19 +7,26 @@ import rs6 from '../Images/personal-growth.png'
 /*import "https://fonts.googleapis.com/css2?family=Materiaal+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"*/
 import '../assets/plants.css'
 //import '../assets/plantss.js'
-import { useEffect} from 'react';
+import { useState, useEffect} from 'react';
+import axios from 'axios'
 
-//interface PlantsProps {
-//    name: string,
-//    img: string,
-//}
+interface PlantsProps {
+    name: string,
+    img: string,
+}
 
 function Plants() {
-    //const [plants, setPlants] = useState<PlantsProps[]>([]);
+    const [plants, setPlants] = useState<PlantsProps[]>([]);
 
-    //useEffect(() => {
-        
-    //});
+    useEffect(() => {
+        const fetchPlants = async () => {
+            const response = await axios.post(`api/UserPlants/UserPlantsExpanded`).catch((err) => { console.log(err) });
+            console.log(response)
+            const plants = response.data;
+            setPlants(plants);
+        }
+        fetchPlants();
+    }, []);
 
     useEffect(() => {
         const initSlider = async () => {
@@ -122,42 +129,14 @@ function Plants() {
                         chevron_left
                     </button>
                     <ul className="image-list">
+                        {plants.map(plant =>
                         <div className="image-item-container" id="image-item-container-1">
                             <img className="image-item" src={rs1} alt="img-1" />
                             <div className="image-overlay">
-                            <p className="cnt">Lorem ipsum dolor sit amet1</p>
+                            <p className="cnt">{plant.name}</p>
                             </div>
                         </div>
-                        <div className="image-item-container" id="image-item-container-2">
-                        <img className="image-item" src={rs2} alt="img-2" />
-                            <div className="image-overlay">
-                                <p className="cnt">Lorem ipsum dolor sit amet2</p>
-                            </div>
-                        </div>
-                        <div className="image-item-container" id="image-item-container-3">
-                        <img className="image-item" src={rs3} alt="img-3" />
-                            <div className="image-overlay">
-                            <p className="cnt">Lorem ipsum dolor sit amet3</p>
-                            </div>
-                        </div>
-                        <div className="image-item-container" id="image-item-container-4">
-                        <img className="image-item" src={rs4} alt="img-4" />
-                            <div className="image-overlay">
-                            <p className="cnt">Lorem ipsum dolor sit ame4t</p>
-                            </div>
-                        </div>
-                        <div className="image-item-container" id="image-item-container-5">
-                        <img className="image-item" src={rs5} alt="img-5" />
-                            <div className="image-overlay">
-                            <p className="cnt">Lorem ipsum dolor sit amet5</p>
-                            </div>
-                        </div>
-                        <div className="image-item-container" id="image-item-container-6">
-                        <img className="image-item" src={rs6} alt="img-6" />
-                            <div className="image-overlay">
-                            <p className="cnt">Lorem ipsum dolor sit amet6</p>
-                            </div>
-                        </div>
+                        )}
                     </ul>
                     <button id="next-slide" className="slide-button material-symbols-rounded">
                         chevron_right

@@ -11,5 +11,6 @@ namespace Leafy.Application.Features.Results.UserPlantResults
         public int Id { get; set; }
         public string PlantName { get; set; } = string.Empty;
         public string UserName { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
     }
 }

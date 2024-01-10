@@ -28,6 +28,7 @@ namespace Leafy.Application.Features.Handlers.UserPlantHandlers
                 Id = userPlant.UserPlantId,
                 PlantName = userPlant.plant.Name,
                 UserName = userPlant.user.Name,
+                ImageUrl = userPlant.plant.ImageUrl
             }).ToList();
         }
     }

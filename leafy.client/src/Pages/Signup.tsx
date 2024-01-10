@@ -7,10 +7,9 @@ import {
   MDBCardBody,
   MDBInput,
 } from "mdb-react-ui-kit";
-import { Link } from "react-router-dom";
 import grass from "../Images/grass.jpg";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 //variables
 
 var email = "";
@@ -70,7 +69,9 @@ async function controller () {
     })
     .then(response => {
       console.log(response);
-      alert('Kayıt işlemi başarılı.')
+      alert('Kayıt işlemi başarılı.');
+      window.location.href = '/user';
+
     })
     .catch(error => {console.log(error)})
     )

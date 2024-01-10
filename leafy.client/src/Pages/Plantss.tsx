@@ -15,7 +15,6 @@ import { useEffect} from 'react';
 //}
 
 function Plants() {
-
     //const [plants, setPlants] = useState<PlantsProps[]>([]);
 
     //useEffect(() => {

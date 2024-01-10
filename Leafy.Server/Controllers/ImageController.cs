@@ -144,7 +144,7 @@ namespace Leafy.Server.Controllers
                 UserId = user.Id,
             });
 
-            return Ok(plantName);
+            return Ok(" Adı: "+plantName +"  Hastalık Durumu: "+diseaseName);
         }
     }
 }

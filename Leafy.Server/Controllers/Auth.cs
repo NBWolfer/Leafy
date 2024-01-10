@@ -182,7 +182,10 @@ namespace Leafy.Server.Controllers
                 {
                     status = false,
                     info = "",
-                    user = ""
+                    userName = "",
+                    userMail = "",
+                    userRole = "",
+                    registeredDate ="",
                 });
             }
 
@@ -207,7 +210,10 @@ namespace Leafy.Server.Controllers
                 {
                     status = false,
                     info = "",
-                    user = ""
+                    userName = "",
+                    userMail = "",
+                    userRole = "",
+                    registeredDate = "",
                 });
             }
             // null gelme artık
@@ -218,23 +224,32 @@ namespace Leafy.Server.Controllers
             {
                    return Ok(new
                    {
-                    status = false,
-                    info = "",
-                    user = ""
-                });
+                        status = false,
+                        info = "",
+                        userName = "",
+                        userMail = "",
+                        userRole = "",
+                        registeredDate = "",
+                   });
             }
             if (claim != "admin")
                 return Ok(new
                 {
                     status = true,
                     info = "user",
-                    user = userCurrent.Name
+                    userName = userCurrent.Name,
+                    userMail = userCurrent.Email,
+                    userRole = userCurrent.Role,
+                    registeredDate = string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", userCurrent.RegisteredDate),
                 });
             return Ok(new
             {
                 status = true,
                 info = "admin",
-                user = userCurrent.Name
+                userName = userCurrent.Name,
+                userMail = userCurrent.Email,
+                userRole = userCurrent.Role,
+                registeredDate = string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", userCurrent.RegisteredDate),
             });
 
         }

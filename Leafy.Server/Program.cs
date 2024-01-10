@@ -25,6 +25,8 @@ builder.Services.AddScoped<IPlantRepository, PlantRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IToken, Token>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IUserPlantRepository, UserPlantRepository>();
+builder.Services.AddScoped<IDiseaseRepository, DiseaseRepository>();
 
 builder.Services.AddApplicationServices(builder.Configuration);
 

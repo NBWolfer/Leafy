@@ -11,5 +11,6 @@ namespace Leafy.Application.Interfaces
     {
         public Task<List<Plant>> GetPlantWithDisease(); 
         public Task<string> ScanPlantDisase(string Image);
+        public Task<Plant> GetPlantByName(string name);
     }
 }

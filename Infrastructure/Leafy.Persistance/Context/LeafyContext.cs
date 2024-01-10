@@ -14,5 +14,6 @@ namespace Leafy.Persistance.Context
         public DbSet<Disease> Diseases { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<UserPlant> UserPlants { get; set; }
     }
 }

@@ -1,9 +1,3 @@
-import rs1 from '../Images/2119927025-0.png'
-import rs2 from '../Images/calendula.png'
-import rs3 from '../Images/4025565.jpg'
-import rs4 from '../Images/623d22d72290ed75f7c45c8ca902f7ba.jpg'
-import rs5 from '../Images/icons8-close-100.png'
-import rs6 from '../Images/personal-growth.png'
 /*import "https://fonts.googleapis.com/css2?family=Materiaal+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"*/
 import '../assets/plants.css'
 //import '../assets/plantss.js'
@@ -11,8 +5,15 @@ import { useState, useEffect} from 'react';
 import axios from 'axios'
 
 interface PlantsProps {
-    name: string,
-    img: string,
+    plantName: string,
+    imageUrl: string,
+    id: number,
+    userName: number,
+}
+
+interface BinaryImageProps {
+    binaryData: string;
+    plantName: string;
 }
 
 function Plants() {
@@ -20,10 +21,14 @@ function Plants() {
 
     useEffect(() => {
         const fetchPlants = async () => {
-            const response = await axios.post(`api/UserPlants/UserPlantsExpanded`).catch((err) => { console.log(err) });
-            console.log(response)
-            const plants = response.data;
-            setPlants(plants);
+            await axios.post(`api/UserPlants/UserPlantsExpanded`).then(res => {
+                console.log(res);
+                var result = res.data;
+                result.forEach((element: any) => {
+                    element.imageUrl = "data:image/j;base64," + element.imageUrl;
+                });
+                setPlants(res.data);
+            }).catch((err) => { console.log(err+" axios içinden") });
         }
         fetchPlants();
     }, []);
@@ -120,7 +125,19 @@ function Plants() {
         window.addEventListener("load", initSlider);
 
     }, []);
-    
+
+    const BinaryImage: React.FC<BinaryImageProps> = ({ binaryData, plantName }) => {
+        return (
+            <div className="image-item-container" key={plantName}>
+                <img src={binaryData} alt={plantName} className="image-item" />
+                <div className="image-overlay">
+                    <p className="cnt">Plant Name: {plantName}</p>
+                </div>
+            </div>
+        );
+    };
+
+
     return (
         <>
             <div className="containerr">
@@ -130,12 +147,12 @@ function Plants() {
                     </button>
                     <ul className="image-list">
                         {plants.map(plant =>
-                        <div className="image-item-container" id="image-item-container-1">
-                            <img className="image-item" src={rs1} alt="img-1" />
-                            <div className="image-overlay">
-                            <p className="cnt">{plant.name}</p>
+                            <div className="image-item-container" id="image-item-container-1" key={plant.id}>
+                                <BinaryImage binaryData={plant.imageUrl} plantName={plant.plantName} />;
+                                <div className="image-overlay">
+                                    <p className="cnt">Plant Name: {plant.plantName}</p>
+                                </div>
                             </div>
-                        </div>
                         )}
                     </ul>
                     <button id="next-slide" className="slide-button material-symbols-rounded">

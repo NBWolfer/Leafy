@@ -33,7 +33,7 @@ namespace Leafy.Server.Controllers
             return Ok(result);
         }
 
-        [HttpGet("UserPlantsExpanded/")]
+        [HttpPost("UserPlantsExpanded/")]
         public async Task<IActionResult> UserPlantExpanded()
         {
             var result = await _mediator.Send(new GetUserPlantExpandedQuery());

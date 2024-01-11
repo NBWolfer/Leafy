@@ -13,5 +13,6 @@ namespace Leafy.Domain.Entities
         public int UserId { get; set; }
         public User user { get; set; }
         public Plant plant { get; set; }
+        public string Image { get; set; } = string.Empty;
     }
 }

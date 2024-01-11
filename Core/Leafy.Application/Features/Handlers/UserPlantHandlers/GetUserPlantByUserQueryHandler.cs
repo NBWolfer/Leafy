@@ -26,7 +26,7 @@ namespace Leafy.Application.Features.Handlers.UserPlantHandlers
             return userPlants.Select(x => new GetUserPlantByUserQueryResult {
                 Id = x.UserPlantId,
                 PlantName = x.plant.Name,
-                ImageUrl = x.plant.ImageUrl
+                ImageUrl = x.Image
             }).ToList();
         }
     }

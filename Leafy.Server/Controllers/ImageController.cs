@@ -129,7 +129,7 @@ namespace Leafy.Server.Controllers
                 {
                     Name = plantName,
                     Description = "Description",
-                    ImageUrl = file.Image,
+                    ImageUrl = "",
                     DiseaseId = disease.Id,
                     LatinName = "LatinName",
                 });
@@ -140,6 +140,7 @@ namespace Leafy.Server.Controllers
             {
                 PlantId = plant.Id,
                 UserId = user.Id,
+                Image = file.Image,
             });
 
             return Ok(" Adı: "+plantName +"  Hastalık Durumu: "+diseaseName);

@@ -26,7 +26,7 @@ namespace Leafy.Server.Controllers
         private readonly IConfiguration _configuration;
         private readonly IEmailService _emailService;
 
-        public Auth(IAuthRepository authRepository, IMediator mediator, IAuthService authService, IToken token, IUserRepository userRepository, IConfiguration configuration, IEmailService emailService)
+        public Auth(IMediator mediator, IAuthService authService, IToken token, IUserRepository userRepository, IConfiguration configuration, IEmailService emailService)
         {
             _configuration = configuration;
             _mediator = mediator;
@@ -220,37 +220,51 @@ namespace Leafy.Server.Controllers
             string claim = Response.HttpContext.User.FindFirst(ClaimTypes.Role).Value??"";
             string claimEmail = Response.HttpContext.User.FindFirst(ClaimTypes.Email).Value??"";
             User userCurrent = await _userRepository.GetUserByEmailAsync(claimEmail);
-            if(claim == null)
+            if (userCurrent != null)
             {
-                   return Ok(new
-                   {
+                if (claim == null)
+                {
+                    return Ok(new
+                    {
                         status = false,
                         info = "",
                         userName = "",
                         userMail = "",
                         userRole = "",
                         registeredDate = "",
-                   });
-            }
-            if (claim != "admin")
+                    });
+                }
+                if (claim != "admin")
+                    return Ok(new
+                    {
+                        status = true,
+                        info = "user",
+                        userName = userCurrent.Name,
+                        userMail = userCurrent.Email,
+                        userRole = userCurrent.Role,
+                        registeredDate = string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", userCurrent.RegisteredDate),
+                    });
                 return Ok(new
                 {
                     status = true,
-                    info = "user",
+                    info = "admin",
                     userName = userCurrent.Name,
                     userMail = userCurrent.Email,
                     userRole = userCurrent.Role,
                     registeredDate = string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", userCurrent.RegisteredDate),
                 });
-            return Ok(new
+            } else
             {
-                status = true,
-                info = "admin",
-                userName = userCurrent.Name,
-                userMail = userCurrent.Email,
-                userRole = userCurrent.Role,
-                registeredDate = string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", userCurrent.RegisteredDate),
-            });
+                   return Ok(new
+                   {
+                    status = false,
+                    info = "",
+                    userName = "",
+                    userMail = "",
+                    userRole = "",
+                    registeredDate = "",
+                });
+            }
 
         }
 

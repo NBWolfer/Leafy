@@ -21,10 +21,9 @@ namespace Leafy.Server.Controllers
         private readonly IDiseaseRepository _diseaseRepository;
         private readonly IRepository<Plant> _repositoryPlant;
         private readonly IRepository<Disease> _repositoryDisease;
-        private readonly IRepository<UserPlants> _repositoryUserPlant;
         private readonly IUserPlantRepository _userPlantRepository;
 
-        public ImageController(IPlantRepository plantRepository, IConfiguration configuration, IToken token, IUserRepository repository, IDiseaseRepository diseaseRepository, IRepository<Plant> repositoryPlant, IRepository<Disease> repositoryDisease, IRepository<UserPlants> repositoryUserPlant, IUserPlantRepository userPlantRepository)
+        public ImageController(IPlantRepository plantRepository, IConfiguration configuration, IToken token, IUserRepository repository, IDiseaseRepository diseaseRepository, IRepository<Plant> repositoryPlant, IRepository<Disease> repositoryDisease, IUserPlantRepository userPlantRepository)
         {
             _repositoryPlant = repositoryPlant;
             _repositoryDisease = repositoryDisease;
@@ -33,7 +32,6 @@ namespace Leafy.Server.Controllers
             _plantRepository = plantRepository;
             _token = token;
             _diseaseRepository = diseaseRepository;
-            _repositoryUserPlant = repositoryUserPlant;
             _userPlantRepository = userPlantRepository;
         }
 
@@ -127,7 +125,7 @@ namespace Leafy.Server.Controllers
 
             if(plant == null)
             {
-                await _repositoryPlant.CreateAsync(plant = new Plant
+                await _repositoryPlant.CreateAsync(new Plant
                 {
                     Name = plantName,
                     Description = "Description",

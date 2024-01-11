@@ -3,6 +3,8 @@ import '../assets/plants.css'
 //import '../assets/plantss.js'
 import { useState, useEffect} from 'react';
 import axios from 'axios'
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 interface PlantsProps {
     plantName: string,
@@ -16,6 +18,9 @@ interface BinaryImageProps {
     plantName: string;
 }
 
+
+function NavigateToScan() {window.location.href = "/scanplant";}
+
 function Plants() {
     const [plants, setPlants] = useState<PlantsProps[]>([]);
 
@@ -28,7 +33,7 @@ function Plants() {
                     element.imageUrl = "data:image/j;base64," + element.imageUrl;
                 });
                 setPlants(res.data);
-            }).catch((err) => { console.log(err+" axios i蓾nden") });
+            }).catch((err) => { console.log(err+" axios i嚙箠nden") });
         }
         fetchPlants();
     }, []);
@@ -140,7 +145,7 @@ function Plants() {
 
     return (
         <>
-            <div className="containerr">
+        {plants.length === 0? (<div className='hata'><div>Kullan覺c覺ya ait hi癟 bir bitki bulunamad覺. Bitki eklemek i癟in tarama sayfas覺na y繹nlendiriliyorsunuz.</div> <button className='buton_navigate' onClick={NavigateToScan}>click me</button></div>): <div className="containerr">
                 <div className="slider-wrapper">
                     <button id="prev-slide" className="slide-button material-symbols-rounded">
                         chevron_left
@@ -164,7 +169,8 @@ function Plants() {
                         <div className="scrollbar-thumb"></div>
                     </div>
                 </div>
-            </div>
+            </div>}
+            
 
 
         </>

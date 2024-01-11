@@ -12,6 +12,28 @@
     background: #f1f4fd;
 }*/
 
+.hata{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: url(/src/Images/desert.jpg);
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    font-size: larger;
+}
+
+.buton_navigate{
+width: 10%;
+background-color: #08573c;
+color: #fff;
+height: 5%;
+margin-top: 1rem;
+}
+
 .containerr {
     padding: 35px;
     width: 85%;

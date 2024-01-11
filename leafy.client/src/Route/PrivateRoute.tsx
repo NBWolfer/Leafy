@@ -15,7 +15,6 @@ export const PrivateRoutes = () => {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/user"  element={<User/>}  />
             <Route path='/scanplant' element={<Scanplant />} />
             <Route path='/plantss' element={<Plantss />} />
             <Route path='/profile' element={<Profile />} />

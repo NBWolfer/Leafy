@@ -178,7 +178,7 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/user"
+                  to="/profile"
                   replace={true}
                   onClick={logout}
                   className="nav-link"

@@ -1,4 +1,5 @@
 /*import PlantList from "../Components/PlantTable";*/
+import { Link } from 'react-router-dom';
 import '../assets/home.css';
 import rsm from '../Images/4025565.jpg'; 
 
@@ -9,7 +10,7 @@ function Home() {
         <div className="content">
             <h3>kesfetmeye basla</h3>
             <p>Bitkinin fotografini yukle gerisini yapay zekaya birak</p>
-            <a href="#" className="btn">basla</a>
+            <Link to='/scanplant' className="btn">basla</Link>
         </div>  
             </section>
 
@@ -22,7 +23,7 @@ function Home() {
                 <h3>Nasil Calisir? </h3>
                 <p>Yazilimimiz sayesinde yuklediginiz fotograflar yapay zeka tarafindan analiz edilir.</p>
                 <p>Tek yapmaniz gereken bitkinizin yapraginin fotografini net bir sekilde cekip siteye yuklemeniz.</p>
-                <a href="#" className="btn">daha fazla</a>
+                <Link to='/about' className="btn">daha fazla</Link>
             </div>
             
         </div>

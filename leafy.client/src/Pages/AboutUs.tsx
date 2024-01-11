@@ -52,7 +52,7 @@ function AboutUs() {
                         </div>
                     </div>
                     <div className="teams">
-                        <img src={berke} alt=""></img>
+                        <img src={r} alt=""></img>
                         <div className="name">Berke Erkan Dogan</div>
                         <div className="desig">Developer</div>
                         <div className="about">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare congue nulla in cursus. In ut elit in nulla gravida efficitur et eget diam. Fusce et tortor dapibus, iaculis nibh eu, lobortis sem. Fusce tincidunt mauris in tellus volutpat egestas.</div>

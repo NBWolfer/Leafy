@@ -42,8 +42,8 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
     render() {
         const { base64Data } = this.state;
         return (
-            <div>
-                <input
+            <div style={{color:"white"}}>
+                <input style={{padding:10}}
                     type="file"
                     name="image"
                     id="file"

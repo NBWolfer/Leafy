@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ImageUpload from "../Components/ImageUpload.tsx";
 import axios from "axios";
+import "../assets/scanplants.css";
 
 interface Plant {
     image: string;
@@ -41,11 +42,15 @@ function Scanplant() {
     }, [plant]);
 
     return (
-        <div className="ScanPlants">
-            {/* Pass the callback function to ImageUpload */}
-            <h2>Result:{result.output}</h2>
-            
-            <ImageUpload onBase64DataChange={handleBase64DataChange} />
+        <div className="scanplants">
+            <div className="result">
+            <h2>Sonuç:{result.output}</h2>
+            </div>
+            <div className="photo">
+                 {/* Pass the callback function to ImageUpload */}
+                <ImageUpload onBase64DataChange={handleBase64DataChange} />
+            </div>
+           
         </div>
     );
 }

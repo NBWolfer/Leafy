@@ -41,10 +41,12 @@ function Scanplant() {
         postPlant();
     }, [plant]);
 
+    const temp = result.output === undefined ? "Loading..." : result.output;
+
     return (
         <div className="scanplants">
             <div className="result">
-            <h2>Sonuç:{result.output}</h2>
+            <h2>Sonuç:{temp}</h2>
             </div>
             <div className="photo">
                  {/* Pass the callback function to ImageUpload */}

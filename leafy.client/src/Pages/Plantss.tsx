@@ -21,7 +21,7 @@ function Plants() {
 
     useEffect(() => {
         const fetchPlants = async () => {
-            await axios.post(`api/UserPlants/UserPlantsExpanded`).then(res => {
+            await axios.post(`api/UserPlants/UserPlantByUserExpanded`).then(res => {
                 console.log(res);
                 var result = res.data;
                 result.forEach((element: any) => {

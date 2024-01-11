@@ -11,5 +11,6 @@ namespace Leafy.Application.Interfaces
     {
         public Task<List<UserPlant>> GetUserPlantsExpanded();
         public Task<UserPlant> GetUserPlantExpanded(int id);
+        public Task<List<UserPlant>> GetUserPlantsByUserExpanded(int userId);
     }
 }

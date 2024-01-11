@@ -40,6 +40,12 @@ namespace Leafy.Persistance.Repositories
             return await _context.UserPlants.Include(p => p.plant).Include(p => p.user).FirstOrDefaultAsync(p => p.UserPlantId == id);
         }
 
+        public async Task<List<UserPlant>> GetUserPlantsByUserExpanded(int userId)
+        {
+            var userPlants = await _context.UserPlants.Where(p => p.UserId == userId).Include(p => p.plant).Include(p => p.user).ToListAsync();
+            return userPlants;
+        }
+
         public async Task<List<UserPlant>> GetUserPlantsExpanded()
         {
             return await _context.UserPlants.Include(p => p.plant).Include(p => p.user).ToListAsync();

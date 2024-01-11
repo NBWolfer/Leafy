@@ -10,6 +10,7 @@ import {
   MDBInput,
 }
 from 'mdb-react-ui-kit';
+import { Link } from 'react-router-dom';
 
 function Login() {
   var email = '';
@@ -59,7 +60,7 @@ function Login() {
               </button>
 
               <div>
-                <p  className="mb-0">Don't have an account? <a href="#!" className="text-white-50 fw-bold">Sign Up</a></p>
+                <p  className="mb-0">Don't have an account? <Link to='/signup' className="text-white-50 fw-bold">Sign Up</Link></p>
 
               </div>
             </MDBCardBody>

@@ -53,18 +53,20 @@ function Plants() {
             const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
             console.log(maxScrollLeft);
 
+
+            //gerekli tüm öğelerin mevcut oldup olmadığının kontrolü eğer bu öğelerden herhangi biri eksikse kodun geri kalanı çalıştırılmaz
             if (imageList && slideButtons.length === 2 && sliderScrollbar && scrollbarThumb) {
-                // Handle scrollbar thumb drag
+                //scrollbar thumb'u sürüklendiğinde görüntü listesinin de hareket etmesi
                 scrollbarThumb.addEventListener("mousedown", (e) => {
                     const startX = e.clientX;
                     const thumbPosition = scrollbarThumb.offsetLeft;
                     const maxThumbPosition = sliderScrollbar.getBoundingClientRect().width - scrollbarThumb.offsetWidth;
 
-                    // Update thumb position on mouse move
+                    //mouse hareketine göre pozisyon güncelleme
                     const handleMouseMove = (e: MouseEvent) => {
                         const deltaX = e.clientX - startX;
                         const newThumbPosition = thumbPosition + deltaX;
-                        // Ensure the scrollbar thumb stays within bounds
+                        //scrollbar thumbın sınırların içinde olması
                         const boundedPosition = Math.max(0, Math.min(maxThumbPosition, newThumbPosition));
                         const scrollPosition = (boundedPosition / maxThumbPosition) * maxScrollLeft;
 
@@ -85,7 +87,7 @@ function Plants() {
                     document.addEventListener("mouseup", handleMouseUp);
                 });
 
-                // Slide images according to the slide button clicks
+                //Slidebuttonun ID'sine göre, sağa (-1) veya sola (1) doğru kaydırma işlemi
                 slideButtons.forEach((button) => {
                     button.addEventListener("click", () => {
                         const direction = button.id === "prev-slide" ? -1 : 1;
@@ -96,7 +98,7 @@ function Plants() {
                     });
                 });
 
-                // Show or hide slide buttons based on scroll position
+                //listenin başında ise sol button gizleme, listenin sonunda ise sağ button gizleme.
                 const handleSlideButtons = () => {
                     if (imageList) {
                         slideButtons[0].style.display = imageList.scrollLeft <= 0 ? "none" : "flex";
@@ -104,7 +106,7 @@ function Plants() {
                     }
                 };
 
-                // Update scrollbar thumb position based on image scroll
+                //scrollbar thumb'u görsel olarak mevcut scroll pozisyonunu yansıtması
                 const updateScrollThumbPosition = () => {
                     if (imageList) {
                         const scrollPosition = imageList.scrollLeft;
@@ -113,7 +115,7 @@ function Plants() {
                     }
                 };
 
-                // Call these two functions when image list scrolls
+                //Görüntü listesi kaydırıldığında, scrollbar thumb'un pozisyonu güncellenir ve slide button'larının görünürlüğü kontrol edilir.
                 if (imageList) {
                     imageList.addEventListener("scroll", () => {
                         updateScrollThumbPosition();

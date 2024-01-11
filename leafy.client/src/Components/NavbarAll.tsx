@@ -26,9 +26,9 @@ function Navbar() {
       >
         <div className="container">
           <div style={{  marginLeft: "0px", marginRight: "px" }}>
-            <Link to="/" replace><img src={logo} style={{width: "64", height: "64", background: "transparent"}}/></Link>   
+            <Link to="/" onClick={handleClose} replace><img src={logo} style={{width: "64", height: "64", background: "transparent"}}/></Link>   
           </div>
-                  <span style={{ color: "#F5DEB3", fontSize: "42px", fontFamily: 'fontadi' }}>Leafy</span>
+                  <Link to='/' style={{ color: "#F5DEB3", fontSize: "42px", fontFamily: 'fontadi' }}>Leafy</Link>
          <button 
             onClick={handleShow}
              style={{ background: "transparent", border: "none", padding: "0px", transform:"scale(1.5)"}}
@@ -39,7 +39,7 @@ function Navbar() {
       </nav>
       <Offcanvas show={show} onHide={handleClose}>
               <div className="offcanvas-header" style={{background:"#F5DEB3" }}>
-          <Link to="/" replace={true}
+          <Link to="/" onClick={handleClose} replace={true}
             className="link-body-emphasis d-flex align-items-center me-md-auto mb-3 mb-md-0 text-decoration-none"
           >
             <img src={logo} alt="" style={{width: "48", height: "48", background: "transparent"}}/>
@@ -60,7 +60,7 @@ function Navbar() {
           <hr className="mt-0" />
           <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
-              <Link to="/" replace={true}
+              <Link to="/"  onClick={handleClose} replace={true}
                 className="nav-link"
                      style={{ color: "#F5DEB3"}}
               >
@@ -82,7 +82,7 @@ function Navbar() {
             </li>
             
             <li className="nav-item">
-              <Link to="/signup" replace={true}
+              <Link to="/signup" onClick={handleClose} replace={true}
                 className="nav-link"
                    style={{ color: "#F5DEB3"}}
               >
@@ -100,7 +100,7 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/login" replace={true}
+              <Link to="/login" onClick={handleClose} replace={true}
                 className="nav-link"
                    style={{ color: "#F5DEB3"}}
               >

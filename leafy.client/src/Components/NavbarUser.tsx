@@ -38,22 +38,9 @@ function Navbar() {
       >
         <div className="container">
           <div style={{ marginLeft: "0px", marginRight: "px" }}>
-            <Link to="/" replace>
-              <img
-                src={logo}
-                style={{ width: "64", height: "64", background: "transparent" }}
-              />
-            </Link>
+          <Link to="/" onClick={handleClose} replace><img src={logo} style={{width: "64", height: "64", background: "transparent"}}/></Link>
           </div>
-          <span
-            style={{
-              color: "#F5DEB3",
-              fontSize: "42px",
-              fontFamily: "fontadi",
-            }}
-          >
-            Leafy
-          </span>
+          <Link to='/' style={{ color: "#F5DEB3", fontSize: "42px", fontFamily: 'fontadi' }}>Leafy</Link>
           <button
             onClick={handleShow}
             style={{
@@ -102,6 +89,7 @@ function Navbar() {
               <li className="nav-item">
                 <Link
                   to="/"
+                  onClick={handleClose}
                   replace={true}
                   className="nav-link"
                   style={{ color: "#F5DEB3" }}
@@ -118,6 +106,7 @@ function Navbar() {
               <li className="nav-item">
                 <Link
                   to="/scanplant"
+                  onClick={handleClose}
                   replace={true}
                   className="nav-link"
                   style={{ color: "#F5DEB3" }}
@@ -139,6 +128,7 @@ function Navbar() {
               <li className="nav-item">
                 <Link
                   to="/Plantss"
+                  onClick={handleClose}
                   replace={true}
                   className="nav-link"
                   style={{ color: "#F5DEB3" }}
@@ -159,6 +149,7 @@ function Navbar() {
               <li className="nav-item">
                 <Link
                   to="/profile"
+                  onClick={handleClose}
                   replace={true}
                   className="nav-link"
                   style={{ color: "#F5DEB3" }}

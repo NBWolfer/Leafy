@@ -158,7 +158,7 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/user"
+                  to="/profile"
                   replace={true}
                   className="nav-link"
                   style={{ color: "#F5DEB3" }}
@@ -178,7 +178,7 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/profile"
+                  to="/"
                   replace={true}
                   onClick={logout}
                   className="nav-link"
